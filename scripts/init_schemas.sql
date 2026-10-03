@@ -10,5 +10,3 @@ dentro
 CREATE SCHEMA IF NOT EXISTS bronce;
 CREATE SCHEMA IF NOT EXISTS plata;
 CREATE SCHEMA IF NOT EXISTS oro;
-
-SELECT schema_name FROM information_schema.schemata;
