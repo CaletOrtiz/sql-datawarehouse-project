@@ -1,0 +1,12 @@
+{
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "name": "DuckDB",
+            "accessMode": "Read/Write",
+            "previewLimit": 50,
+            "driver": "DuckDB",
+            "databaseFilePath": "~/proyecto-base/sql-datawarehouse-project/data/dwh.duckdb"
+        }
+    ]
+}

@@ -1,2 +1,4 @@
 *.tbl
 *.parquet
+*.duckdb
+*.duckdb.wal
