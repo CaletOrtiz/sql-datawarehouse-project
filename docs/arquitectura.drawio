@@ -94,6 +94,9 @@
         <mxCell id="7h-Ckt93WjeL3GpCfprF-50" parent="1" style="triangle;whiteSpace=wrap;html=1;shapeInside=1;strokeColor=light-dark(#000000,#006666);fillColor=light-dark(#FFFFFF,#3399FF);" value="" vertex="1">
           <mxGeometry height="60" width="45" x="275" y="334.35" as="geometry" />
         </mxCell>
+        <mxCell id="7h-Ckt93WjeL3GpCfprF-51" parent="1" style="whiteSpace=wrap;html=1;" value="DATA WARE HOUSE ARQUITECTURE" vertex="1">
+          <mxGeometry height="60" width="802.9" x="160" y="40" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
