@@ -2,7 +2,8 @@
 ===============================
 CAPA DE PLATA 
 ===============================
-creacion de la capa de plata
+ESTE SCRIPT CREA LAS TABLAS DE LA CAPA PLATA, SECUENCIAS Y TRIGGERS PARA LLAVES PRIMARIAS
+DE TABLAS NUEVAS (BRAND Y CONTAINER)
 */
 
 DROP TABLE IF EXISTS plata.tbl_nation;
@@ -13,7 +14,8 @@ DROP TABLE IF EXISTS plata.tbl_orders;
 DROP TABLE IF EXISTS plata.tbl_partsupp;
 DROP TABLE IF EXISTS plata.tbl_customer;
 DROP TABLE IF EXISTS plata.tbl_part;
-
+DROP TABLE IF EXISTS plata.tbl_brand;
+DROP TABLE IF EXISTS plata.tbl_container;
 
 
 
@@ -36,10 +38,10 @@ CREATE TABLE IF NOT EXISTS plata.tbl_part(
     p_partkey INTEGER,
     p_name VARCHAR(25),
     p_mfgr CHAR(25),
-    p_brand CHAR(10),
+    p_brand INTEGER,
     p_type VARCHAR(25),
     p_size INTEGER,
-    p_container CHAR(10),
+    p_container INTEGER,
     p_retailprice DECIMAL(15,2),
     p_comment VARCHAR(23),
     dwh_created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -97,8 +99,8 @@ CREATE TABLE IF NOT EXISTS plata.tbl_lineitem(
     l_linenumber INTEGER,
     l_quantity DECIMAL(15,2),
     l_extendedprice DECIMAL(15,2),
-    l_discount DECIMAL(15,2),
-    l_tax DECIMAL(15,2),
+    l_discount DECIMAL(3,2),
+    l_tax DECIMAL(3,2),
     l_returnflag CHAR(1),
     l_linestatus CHAR(1),
     l_shipdate DATE,
@@ -109,3 +111,5 @@ CREATE TABLE IF NOT EXISTS plata.tbl_lineitem(
     l_comment VARCHAR(44),
     dwh_created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
