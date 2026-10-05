@@ -7,25 +7,13 @@ y carga el esquema estrella de la capa oro.
 Al final verifica la carga.
 */
 
--- DIM_DATE: calendario generado a partir del rango de fechas del negocio
+-- DIM_DATE: calendario fijo 1992-01-01 a 1997-12-01
 CREATE OR REPLACE TABLE oro.dim_date AS
-WITH fechas AS (
-    SELECT o_orderdate AS d FROM plata.tbl_orders
-    UNION
-    SELECT l_shipdate FROM plata.tbl_lineitem
-    UNION
-    SELECT l_commitdate FROM plata.tbl_lineitem
-    UNION
-    SELECT l_receiptdate FROM plata.tbl_lineitem
-),
-rango AS (
-    SELECT MIN(d) AS ini, MAX(d) AS fin FROM fechas
-),
-calendario AS (
+WITH calendario AS (
     SELECT CAST(d AS DATE) AS full_date
     FROM generate_series(
-        (SELECT MIN(d) FROM fechas),
-        (SELECT MAX(d) FROM fechas),
+        DATE '1992-01-01',
+        DATE '1997-12-01',
         INTERVAL 1 DAY
     ) AS t(d)
 )

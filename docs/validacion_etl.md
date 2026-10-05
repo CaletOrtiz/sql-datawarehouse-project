@@ -36,7 +36,7 @@ flowchart LR
 | | tbl_customer / dim_customer | 1500 |
 | | tbl_orders | 15000 |
 | | tbl_lineitem / fact_sales | 60175 |
-| oro | dim_date | 2551 (1992-01-02 → 1998-12-31) |
+| oro | dim_date | 2162 (1992-01-01 → 1997-12-01) |
 
 ## Consultas de ejemplo sobre ORO
 
