@@ -57,3 +57,4 @@ duckdb ./data/dwh.duckdb < ./scripts/oro/etl_oro.sql
 | [erd_plata.md](erd_plata.md) | ERD de la capa plata |
 | [erd_oro.md](erd_oro.md) | ERD del esquema estrella (oro) |
 | [etl_proceso.md](etl_proceso.md) | Detalle del proceso ETL, checks y comandos |
+| [validacion_etl.md](validacion_etl.md) | Ejecución real validada + volumenes + consultas de ejemplo |
