@@ -7,13 +7,13 @@ y carga el esquema estrella de la capa oro.
 Al final verifica la carga.
 */
 
--- DIM_TIEMPO: calendario fijo 1992-01-01 a 1997-12-01
+-- DIM_TIEMPO: calendario del periodo de análisis 1992-1997
 CREATE OR REPLACE TABLE oro.dim_tiempo AS
 WITH calendario AS (
     SELECT CAST(d AS DATE) AS fecha_completa
     FROM generate_series(
         DATE '1992-01-01',
-        DATE '1997-12-01',
+        DATE '1997-12-31',
         INTERVAL 1 DAY
     ) AS t(d)
 )
@@ -78,10 +78,13 @@ SELECT
     ROUND(l.l_extendedprice * (1 - l.l_discount), 2) AS venta_neta,
     ROUND(l.l_extendedprice * (1 - l.l_discount) * l.l_tax, 2) AS monto_impuesto
 FROM plata.tbl_lineitem l
-JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey;
+JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey
+WHERE o.o_orderdate >= DATE '1992-01-01'
+  AND o.o_orderdate < DATE '1998-01-01';
 
 -- VERIFICACIÓN
 SELECT 'dim_tiempo' AS tabla, COUNT(*) AS filas FROM oro.dim_tiempo
 UNION ALL SELECT 'dim_cliente', COUNT(*) FROM oro.dim_cliente
 UNION ALL SELECT 'dim_producto', COUNT(*) FROM oro.dim_producto
 UNION ALL SELECT 'factura', COUNT(*) FROM oro.factura;
+SELECT (*) FROM oro.dim_tiempo LIMIT 5;
