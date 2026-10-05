@@ -42,9 +42,8 @@ SELECT
 FROM calendario;
 
 -- DIM_CUSTOMER
-INSERT INTO oro.dim_customer (customer_key, customer_id, customer_name, address, phone, market_segment, nation, region, account_balance)
+INSERT INTO oro.dim_customer (customer_key, customer_name, address, phone, market_segment, nation, region, account_balance)
 SELECT
-    c.c_custkey,
     c.c_custkey,
     c.c_name,
     c.c_address,
@@ -58,9 +57,8 @@ LEFT JOIN plata.tbl_nation n ON c.c_nationkey = n.n_nationkey
 LEFT JOIN plata.tbl_region r ON n.n_regionkey = r.r_regionkey;
 
 -- DIM_PRODUCT (normalizada con brand y container)
-INSERT INTO oro.dim_product (product_key, product_id, product_name, manufacturer, brand, type, size, container, retail_price)
+INSERT INTO oro.dim_product (product_key, product_name, manufacturer, brand, type, size, container, retail_price)
 SELECT
-    p.p_partkey,
     p.p_partkey,
     p.p_name,
     p.p_mfgr,
@@ -74,9 +72,8 @@ LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey
 LEFT JOIN plata.tbl_container con ON p.p_container = con.c_containerkey;
 
 -- DIM_SUPPLIER
-INSERT INTO oro.dim_supplier (supplier_key, supplier_id, supplier_name, address, phone, nation, region, account_balance)
+INSERT INTO oro.dim_supplier (supplier_key, supplier_name, address, phone, nation, region, account_balance)
 SELECT
-    s.s_suppkey,
     s.s_suppkey,
     s.s_name,
     s.s_address,

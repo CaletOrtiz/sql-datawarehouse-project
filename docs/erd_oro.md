@@ -44,7 +44,6 @@ erDiagram
     }
     DIM_CUSTOMER {
         int customer_key PK
-        int customer_id
         varchar customer_name
         varchar address
         char phone
@@ -56,7 +55,6 @@ erDiagram
     }
     DIM_PRODUCT {
         int product_key PK
-        int product_id
         varchar product_name
         char manufacturer
         varchar brand
@@ -68,7 +66,6 @@ erDiagram
     }
     DIM_SUPPLIER {
         int supplier_key PK
-        int supplier_id
         char supplier_name
         varchar address
         char phone

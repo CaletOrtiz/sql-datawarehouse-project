@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS oro.dim_date (
 
 CREATE TABLE IF NOT EXISTS oro.dim_customer (
     customer_key    INTEGER PRIMARY KEY,   -- surrogate key = c_custkey
-    customer_id     INTEGER,               -- c_custkey original
     customer_name   VARCHAR(25),
     address         VARCHAR(40),
     phone           CHAR(15),
@@ -43,7 +42,6 @@ CREATE TABLE IF NOT EXISTS oro.dim_customer (
 
 CREATE TABLE IF NOT EXISTS oro.dim_product (
     product_key     INTEGER PRIMARY KEY,   -- surrogate key = p_partkey
-    product_id      INTEGER,               -- p_partkey original
     product_name    VARCHAR(25),
     manufacturer    CHAR(25),
     brand           VARCHAR(25),
@@ -56,7 +54,6 @@ CREATE TABLE IF NOT EXISTS oro.dim_product (
 
 CREATE TABLE IF NOT EXISTS oro.dim_supplier (
     supplier_key    INTEGER PRIMARY KEY,   -- surrogate key = s_suppkey
-    supplier_id     INTEGER,               -- s_suppkey original
     supplier_name   CHAR(25),
     address         VARCHAR(40),
     phone           CHAR(15),
