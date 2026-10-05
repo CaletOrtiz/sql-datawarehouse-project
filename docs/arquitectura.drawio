@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Página-1" id="qW6h5nT9PrEW3ZWFQX8k">
-    <mxGraphModel dx="1323" dy="885" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="378" dy="253" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -105,6 +105,9 @@
         </mxCell>
         <mxCell id="0vpAG-yfr6doGM7V7ApB-4" parent="1" style="triangle;whiteSpace=wrap;html=1;shapeInside=1;strokeColor=light-dark(#000000,#006666);fillColor=light-dark(#FFFFFF,#3399FF);" value="" vertex="1">
           <mxGeometry height="60" width="45" x="980" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="7FIjY0EKuO2kiYUvQDXV-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=11;" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b&gt;Object type: views&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Carga:&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Batch processing&lt;/span&gt;&lt;/li&gt;&lt;li&gt;carga completa&lt;/li&gt;&lt;li&gt;Insert (INSERT)&lt;/li&gt;&lt;/ul&gt;&lt;b&gt;Transformation:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;logica de negocio&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;integracion de datos&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;agregaciones&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b&gt;Data model: &lt;/b&gt;&amp;nbsp;Estrella&lt;/div&gt;" vertex="1">
+          <mxGeometry height="175.65" width="140" x="792" y="344.35" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

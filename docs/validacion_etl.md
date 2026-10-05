@@ -36,7 +36,7 @@ flowchart LR
 | | tbl_customer / dim_cliente | 1500 |
 | | tbl_orders | 15000 |
 | | tbl_lineitem | 60175 |
-| oro | factura | Líneas de pedidos con fecha entre 1992-01-01 y 1997-12-31 |
+| oro | factura | Líneas (devueltas y no devueltas) de pedidos con fecha entre 1992-01-01 y 1997-12-31 |
 | | dim_tiempo | 2192 (1992-01-01 → 1997-12-31) |
 
 ## Consultas de ejemplo sobre ORO
