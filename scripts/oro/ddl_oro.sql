@@ -4,7 +4,7 @@ GOLD LAYER (ORO) - STAR SCHEMA DDL
 ==============================================
 Esquema en estrella optimizado para análisis:
   - fact_sales (hechos: líneas de venta)
-  - dim_date, dim_customer, dim_product, dim_supplier
+  - dim_date, dim_customer, dim_product
 
 WARNING: Este script elimina las tablas existentes en el esquema oro.
 */
@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS oro.fact_sales;
 DROP TABLE IF EXISTS oro.dim_date;
 DROP TABLE IF EXISTS oro.dim_customer;
 DROP TABLE IF EXISTS oro.dim_product;
-DROP TABLE IF EXISTS oro.dim_supplier;
+
 
 -- Dimensión de fechas (role-playing: order/ship/commit/receipt)
 CREATE TABLE IF NOT EXISTS oro.dim_date (
@@ -48,18 +48,8 @@ CREATE TABLE IF NOT EXISTS oro.dim_product (
     type            VARCHAR(25),
     size            INTEGER,
     container       VARCHAR(10),
+    supplier_name   VARCHAR(25),
     retail_price    DECIMAL(15,2),
-    dwh_created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE IF NOT EXISTS oro.dim_supplier (
-    supplier_key    INTEGER PRIMARY KEY,   -- surrogate key = s_suppkey
-    supplier_name   CHAR(25),
-    address         VARCHAR(40),
-    phone           CHAR(15),
-    nation          VARCHAR(25),
-    region          VARCHAR(25),
-    account_balance DECIMAL(15,2),
     dwh_created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -69,7 +59,6 @@ CREATE TABLE IF NOT EXISTS oro.fact_sales (
     line_number     INTEGER,               -- l_linenumber
     customer_key    INTEGER,               -- FK dim_customer
     product_key     INTEGER,               -- FK dim_product
-    supplier_key    INTEGER,               -- FK dim_supplier
     order_date_key  INTEGER,               -- FK dim_date (o_orderdate)
     ship_date_key   INTEGER,               -- FK dim_date (l_shipdate)
     commit_date_key INTEGER,               -- FK dim_date (l_commitdate)

@@ -44,8 +44,8 @@ FROM plata.tbl_customer c
 LEFT JOIN plata.tbl_nation n ON c.c_nationkey = n.n_nationkey
 LEFT JOIN plata.tbl_region r ON n.n_regionkey = r.r_regionkey;
 
--- DIM_PRODUCT (normalizada con brand y container)
-INSERT INTO oro.dim_product (product_key, product_name, manufacturer, brand, type, size, container, retail_price)
+-- DIM_PRODUCT (normalizada con brand, container y proveedor)
+INSERT INTO oro.dim_product (product_key, product_name, manufacturer, brand, type, size, container, supplier_name, retail_price)
 SELECT
     p.p_partkey,
     p.p_name,
@@ -53,29 +53,22 @@ SELECT
     b.b_brandname,
     p.p_type,
     p.p_size,
-    con.c_container::VARCHAR AS container,
+    con.c_container AS container,
+    sup.supplier_name,
     p.p_retailprice
 FROM plata.tbl_part p
 LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey
-LEFT JOIN plata.tbl_container con ON p.p_container = con.c_containerkey;
-
--- DIM_SUPPLIER
-INSERT INTO oro.dim_supplier (supplier_key, supplier_name, address, phone, nation, region, account_balance)
-SELECT
-    s.s_suppkey,
-    s.s_name,
-    s.s_address,
-    s.s_phone,
-    n.n_name,
-    r.r_name,
-    s.s_acctbal
-FROM plata.tbl_supplier s
-LEFT JOIN plata.tbl_nation n ON s.s_nationkey = n.n_nationkey
-LEFT JOIN plata.tbl_region r ON n.n_regionkey = r.r_regionkey;
+LEFT JOIN plata.tbl_container con ON p.p_container = con.c_containerkey
+LEFT JOIN (
+    SELECT ps.ps_partkey, s.s_name AS supplier_name,
+           ROW_NUMBER() OVER (PARTITION BY ps.ps_partkey ORDER BY ps.ps_supplycost) AS rn
+    FROM plata.tbl_partsupp ps
+    JOIN plata.tbl_supplier s ON ps.ps_suppkey = s.s_suppkey
+) sup ON sup.ps_partkey = p.p_partkey AND sup.rn = 1;
 
 -- FACT_SALES
 INSERT INTO oro.fact_sales (
-    sales_key, order_id, line_number, customer_key, product_key, supplier_key,
+    sales_key, order_id, line_number, customer_key, product_key,
     order_date_key, ship_date_key, commit_date_key, receipt_date_key,
     quantity, extended_price, discount, tax, revenue,
     order_status, order_priority, return_flag, line_status, ship_mode, ship_instruct
@@ -86,7 +79,6 @@ SELECT
     l.l_linenumber,
     o.o_custkey,
     l.l_partkey,
-    l.l_suppkey,
     CAST(strftime(o.o_orderdate, '%Y%m%d') AS INTEGER),
     CAST(strftime(l.l_shipdate, '%Y%m%d') AS INTEGER),
     CAST(strftime(l.l_commitdate, '%Y%m%d') AS INTEGER),
@@ -109,5 +101,4 @@ JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey;
 SELECT 'dim_date' AS tabla, COUNT(*) AS filas FROM oro.dim_date
 UNION ALL SELECT 'dim_customer', COUNT(*) FROM oro.dim_customer
 UNION ALL SELECT 'dim_product', COUNT(*) FROM oro.dim_product
-UNION ALL SELECT 'dim_supplier', COUNT(*) FROM oro.dim_supplier
 UNION ALL SELECT 'fact_sales', COUNT(*) FROM oro.fact_sales;

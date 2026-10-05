@@ -29,8 +29,7 @@ flowchart LR
         O1[dim_date]
         O2[dim_customer]
         O3[dim_product]
-        O4[dim_supplier]
-        O5[fact_sales]
+        O4[fact_sales]
     end
 
     DB[(DuckDB<br/>data/dwh.duckdb)]

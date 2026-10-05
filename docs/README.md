@@ -33,7 +33,7 @@ sources/tbl/             # Archivos .tbl (ignorados en git)
    ajuste de tipos (`DECIMAL(3,2)` en discount/tax), estandarización de
    `o_orderpriority` y columna de auditoría `dwh_created_date`.
 5. **Oro**: esquema estrella con hechos (`fact_sales`) y dimensiones
-   (`dim_date`, `dim_customer`, `dim_product`, `dim_supplier`) listas para BI.
+   (`dim_date`, `dim_customer`, `dim_product`) listas para BI.
 
 ## Cómo se carga el ETL (orden de ejecución)
 

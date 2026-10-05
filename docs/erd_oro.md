@@ -5,7 +5,6 @@ erDiagram
     DIM_DATE ||--o{ FACT_SALES : "order_date_key / ship_date_key / commit_date_key / receipt_date_key"
     DIM_CUSTOMER ||--o{ FACT_SALES : "customer_key"
     DIM_PRODUCT ||--o{ FACT_SALES : "product_key"
-    DIM_SUPPLIER ||--o{ FACT_SALES : "supplier_key"
 
     FACT_SALES {
         int sales_key PK
@@ -13,7 +12,6 @@ erDiagram
         int line_number
         int customer_key FK
         int product_key FK
-        int supplier_key FK
         int order_date_key FK
         int ship_date_key FK
         int commit_date_key FK
@@ -61,17 +59,8 @@ erDiagram
         varchar type
         int size
         varchar container
+        varchar supplier_name
         decimal retail_price
-        timestamp dwh_created_date
-    }
-    DIM_SUPPLIER {
-        int supplier_key PK
-        char supplier_name
-        varchar address
-        char phone
-        varchar nation
-        varchar region
-        decimal account_balance
         timestamp dwh_created_date
     }
 ```
@@ -82,6 +71,5 @@ erDiagram
 |---|---|---|
 | `dim_date` | fechas de `tbl_orders` y `tbl_lineitem` | calendario con `generate_series`, atributos de fecha (año, mes, día, fin de semana) |
 | `dim_customer` | `tbl_customer` + `tbl_nation` + `tbl_region` | aplanado de nación y región, denormalización |
-| `dim_product` | `tbl_part` + `tbl_brand` + `tbl_container` | denormalización de marca y contenedor |
-| `dim_supplier` | `tbl_supplier` + `tbl_nation` + `tbl_region` | aplanado de nación y región |
+| `dim_product` | `tbl_part` + `tbl_brand` + `tbl_container` + `tbl_partsupp` + `tbl_supplier` | denormalización de marca, contenedor y nombre del proveedor |
 | `fact_sales` | `tbl_lineitem` JOIN `tbl_orders` | métricas: `revenue = extended_price * (1 - discount) * (1 + tax)` |

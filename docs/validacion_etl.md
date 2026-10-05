@@ -32,7 +32,7 @@ flowchart LR
 | | tbl_brand | 25 |
 | | tbl_container | 40 |
 | | tbl_part | 2000 |
-| | tbl_partsupp / dim_supplier | 8000 / 100 |
+| | tbl_partsupp | 8000 |
 | | tbl_customer / dim_customer | 1500 |
 | | tbl_orders | 15000 |
 | | tbl_lineitem / fact_sales | 60175 |
