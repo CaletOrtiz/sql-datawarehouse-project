@@ -3,7 +3,7 @@
 BRONZE LAYER TABLES
 
 Esta etapa consiste en la creación de la tablas 
-e ingestas de los datos .tbl de /sources/tbl/*.tbl
+e ingestas de los datos .tbl de sources/tbl
 
 WARNING: Este script elimina las tablas existentes en el esquema bronce antes de crear nuevas tablas.
 ==============================================

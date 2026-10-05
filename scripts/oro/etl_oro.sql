@@ -22,8 +22,12 @@ rango AS (
     SELECT MIN(d) AS ini, MAX(d) AS fin FROM fechas
 ),
 calendario AS (
-    SELECT CAST(generate_series(ini, fin, INTERVAL 1 DAY) AS DATE) AS full_date
-    FROM rango
+    SELECT CAST(d AS DATE) AS full_date
+    FROM generate_series(
+        (SELECT MIN(d) FROM fechas),
+        (SELECT MAX(d) FROM fechas),
+        INTERVAL 1 DAY
+    ) AS t(d)
 )
 SELECT
     CAST(strftime(full_date, '%Y%m%d') AS INTEGER) AS date_key,

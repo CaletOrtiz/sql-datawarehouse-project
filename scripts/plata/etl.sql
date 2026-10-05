@@ -47,9 +47,9 @@ SELECT
     p.p_comment
 FROM bronce.tbl_part p
 LEFT JOIN plata.tbl_brand b 
-    ON p.p_brand = b.b_brandname
+    ON TRIM(p.p_brand) = b.b_brandname
 LEFT JOIN plata.tbl_container c 
-    ON p.p_container = c.c_container;
+    ON TRIM(p.p_container) = c.c_container;
 
 
 -- CARGA DE DATOS EN LA TABLA PLATA.TBL_PARTSUPP
@@ -67,7 +67,6 @@ SELECT
     ps.ps_supplycost,
     ps.ps_comment
 FROM bronce.tbl_partsupp ps
-WHERE schema_name = 'plata'
 WHERE ps.ps_partkey IS NOT NULL AND ps.ps_suppkey IS NOT NULL;
 
 --Carga de datos en la tabla PLATA.TBL_CUSTOMER
