@@ -2,65 +2,50 @@
 
 ```mermaid
 erDiagram
-    DIM_DATE ||--o{ FACT_SALES : "order_date_key / ship_date_key / commit_date_key / receipt_date_key"
-    DIM_CUSTOMER ||--o{ FACT_SALES : "customer_key"
-    DIM_PRODUCT ||--o{ FACT_SALES : "product_key"
+    DIM_TIEMPO ||--o{ FACTURA : "fecha_venta"
+    DIM_CLIENTE ||--o{ FACTURA : "cliente_fk"
+    DIM_PRODUCTO ||--o{ FACTURA : "producto_fk"
 
-    FACT_SALES {
-        int sales_key PK
-        int order_id
-        int line_number
-        int customer_key FK
-        int product_key FK
-        int order_date_key FK
-        int ship_date_key FK
-        int commit_date_key FK
-        int receipt_date_key FK
-        decimal quantity
-        decimal extended_price
-        decimal discount
-        decimal tax
-        decimal revenue
-        char order_status
-        varchar order_priority
-        char return_flag
-        char line_status
-        char ship_mode
-        char ship_instruct
+    FACTURA {
+        bigint factura_pk PK
+        bigint fecha_venta FK
+        bigint cliente_fk FK
+        bigint producto_fk FK
+        bigint cantidad_de_producto
+        decimal precio_bruto
+        decimal porcentaje_descuento
+        decimal porcentaje_impuesto
+        decimal venta_neta
+        decimal monto_impuesto
         timestamp dwh_created_date
     }
-    DIM_DATE {
-        int date_key PK
-        date full_date
-        int year
-        int quarter
-        int month
-        varchar month_name
-        int day
-        varchar day_name
-        boolean is_weekend
-    }
-    DIM_CUSTOMER {
-        int customer_key PK
-        varchar customer_name
-        varchar address
-        char phone
-        char market_segment
-        varchar nation
-        varchar region
-        decimal account_balance
+    DIM_TIEMPO {
+        bigint tiempo_pk PK
+        smallint anio
+        smallint mes
+        smallint dia
+        date fecha_completa
+        varchar mes_nombre
+        varchar dia_semana
+        smallint trimestre
+        varchar trimestre_nombre
         timestamp dwh_created_date
     }
-    DIM_PRODUCT {
-        int product_key PK
-        varchar product_name
-        char manufacturer
-        varchar brand
-        varchar type
-        int size
-        varchar container
-        varchar supplier_name
-        decimal retail_price
+    DIM_CLIENTE {
+        bigint cliente_pk PK
+        varchar nombre_cliente
+        varchar segmento_mercado
+        varchar pais_nombre
+        varchar regio_nombre
+        timestamp dwh_created_date
+    }
+    DIM_PRODUCTO {
+        bigint producto_pk PK
+        varchar nombre_producto
+        varchar fabricante
+        varchar marca
+        varchar tipo_producto
+        varchar nombre_proveedor
         timestamp dwh_created_date
     }
 ```
@@ -69,7 +54,7 @@ erDiagram
 
 | Entidad | Origen en plata | Transformaciones |
 |---|---|---|
-| `dim_date` | fechas de `tbl_orders` y `tbl_lineitem` | calendario con `generate_series`, atributos de fecha (año, mes, día, fin de semana) |
-| `dim_customer` | `tbl_customer` + `tbl_nation` + `tbl_region` | aplanado de nación y región, denormalización |
-| `dim_product` | `tbl_part` + `tbl_brand` + `tbl_container` + `tbl_partsupp` + `tbl_supplier` | denormalización de marca, contenedor y nombre del proveedor |
-| `fact_sales` | `tbl_lineitem` JOIN `tbl_orders` | métricas: `revenue = extended_price * (1 - discount) * (1 + tax)` |
+| `dim_tiempo` | fechas de `tbl_orders` y `tbl_lineitem` | calendario 1992-01-01 a 1997-12-01 con `generate_series`, atributos de fecha (año, mes, día, trimestre) |
+| `dim_cliente` | `tbl_customer` + `tbl_nation` + `tbl_region` | aplanado de país y región |
+| `dim_producto` | `tbl_part` + `tbl_brand` + `tbl_partsupp` + `tbl_supplier` | denormalización de marca y nombre del proveedor (proveedor más económico vía `ps_supplycost`) |
+| `factura` | `tbl_lineitem` JOIN `tbl_orders` | `venta_neta = precio_bruto * (1 - descuento)`, `monto_impuesto = venta_neta * impuesto` |

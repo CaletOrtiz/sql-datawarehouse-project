@@ -33,10 +33,10 @@ flowchart LR
 | | tbl_container | 40 |
 | | tbl_part | 2000 |
 | | tbl_partsupp | 8000 |
-| | tbl_customer / dim_customer | 1500 |
+| | tbl_customer / dim_cliente | 1500 |
 | | tbl_orders | 15000 |
-| | tbl_lineitem / fact_sales | 60175 |
-| oro | dim_date | 2162 (1992-01-01 → 1997-12-01) |
+| | tbl_lineitem / factura | 60175 |
+| oro | dim_tiempo | 2162 (1992-01-01 → 1997-12-01) |
 
 ## Consultas de ejemplo sobre ORO
 
@@ -44,27 +44,27 @@ flowchart LR
 -- 1. Revenue por año y quarter
 SELECT d.year, d.quarter,
        ROUND(SUM(f.revenue), 2) AS revenue
-FROM oro.fact_sales f
-JOIN oro.dim_date d ON f.order_date_key = d.date_key
+FROM oro.factura f
+JOIN oro.dim_tiempo d ON f.order_date_key = d.date_key
 GROUP BY 1, 2 ORDER BY 1, 2;
 
 -- 2. Top 10 clientes por revenue
 SELECT c.customer_name, c.nation, ROUND(SUM(f.revenue), 2) AS revenue
-FROM oro.fact_sales f
-JOIN oro.dim_customer c ON f.customer_key = c.customer_key
+FROM oro.factura f
+JOIN oro.dim_cliente c ON f.customer_key = c.customer_key
 GROUP BY 1, 2 ORDER BY 3 DESC LIMIT 10;
 
 -- 3. Revenue por marca
 SELECT p.brand, ROUND(SUM(f.revenue), 2) AS revenue
-FROM oro.fact_sales f
-JOIN oro.dim_product p ON f.product_key = p.product_key
+FROM oro.factura f
+JOIN oro.dim_producto p ON f.product_key = p.product_key
 GROUP BY 1 ORDER BY 2 DESC;
 
 -- 4. Entregas fuera de tiempo (shipdate > receiptdate no; usamos commit vs receipt)
 SELECT d1.full_date AS commit_date, d2.full_date AS receipt_date
-FROM oro.fact_sales f
-JOIN oro.dim_date d1 ON f.commit_date_key = d1.date_key
-JOIN oro.dim_date d2 ON f.receipt_date_key = d2.date_key
+FROM oro.factura f
+JOIN oro.dim_tiempo d1 ON f.commit_date_key = d1.date_key
+JOIN oro.dim_tiempo d2 ON f.receipt_date_key = d2.date_key
 WHERE d2.full_date < d1.full_date LIMIT 10;
 ```
 

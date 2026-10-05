@@ -32,8 +32,8 @@ sources/tbl/             # Archivos .tbl (ignorados en git)
 4. **Plata**: limpieza (TRIM), filtros de nulls, normalización de `brand`/`container`,
    ajuste de tipos (`DECIMAL(3,2)` en discount/tax), estandarización de
    `o_orderpriority` y columna de auditoría `dwh_created_date`.
-5. **Oro**: esquema estrella con hechos (`fact_sales`) y dimensiones
-   (`dim_date`, `dim_customer`, `dim_product`) listas para BI.
+5. **Oro**: esquema estrella con hechos (`factura`) y dimensiones
+   (`dim_tiempo`, `dim_cliente`, `dim_producto`) listas para BI.
 
 ## Cómo se carga el ETL (orden de ejecución)
 

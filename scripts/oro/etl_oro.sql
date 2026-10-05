@@ -1,16 +1,16 @@
 /*
 ==============================================
-ETL PLATA -> ORO (STAR SCHEMA)
+ETL PLATA -> ORO (STAR SCHEMA FACTURA)
 ==============================================
 Extrae de capa plata, transforma a dimensiones y hechos,
 y carga el esquema estrella de la capa oro.
 Al final verifica la carga.
 */
 
--- DIM_DATE: calendario fijo 1992-01-01 a 1997-12-01
-CREATE OR REPLACE TABLE oro.dim_date AS
+-- DIM_TIEMPO: calendario fijo 1992-01-01 a 1997-12-01
+CREATE OR REPLACE TABLE oro.dim_tiempo AS
 WITH calendario AS (
-    SELECT CAST(d AS DATE) AS full_date
+    SELECT CAST(d AS DATE) AS fecha_completa
     FROM generate_series(
         DATE '1992-01-01',
         DATE '1997-12-01',
@@ -18,47 +18,41 @@ WITH calendario AS (
     ) AS t(d)
 )
 SELECT
-    CAST(strftime(full_date, '%Y%m%d') AS INTEGER) AS date_key,
-    full_date,
-    CAST(strftime(full_date, '%Y') AS INTEGER) AS year,
-    (CAST(strftime(full_date, '%m') AS INTEGER) - 1) / 3 + 1 AS quarter,
-    CAST(strftime(full_date, '%m') AS INTEGER) AS month,
-    strftime(full_date, '%B') AS month_name,
-    CAST(strftime(full_date, '%d') AS INTEGER) AS day,
-    strftime(full_date, '%A') AS day_name,
-    CAST(strftime(full_date, '%w') AS INTEGER) IN (0, 6) AS is_weekend
+    CAST(strftime(fecha_completa, '%Y%m%d') AS BIGINT) AS tiempo_pk,
+    CAST(strftime(fecha_completa, '%Y') AS SMALLINT) AS anio,
+    CAST(strftime(fecha_completa, '%m') AS SMALLINT) AS mes,
+    CAST(strftime(fecha_completa, '%d') AS SMALLINT) AS dia,
+    fecha_completa,
+    strftime(fecha_completa, '%B') AS mes_nombre,
+    strftime(fecha_completa, '%A') AS dia_semana,
+    CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS SMALLINT) AS trimestre,
+    'T' || CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS VARCHAR) AS trimestre_nombre,
+    CURRENT_TIMESTAMP AS dwh_created_date
 FROM calendario;
 
--- DIM_CUSTOMER
-INSERT INTO oro.dim_customer (customer_key, customer_name, address, phone, market_segment, nation, region, account_balance)
+-- DIM_CLIENTE
+INSERT INTO oro.dim_cliente (cliente_pk, nombre_cliente, segmento_mercado, pais_nombre, regio_nombre)
 SELECT
-    c.c_custkey,
+    c.c_custkey::BIGINT,
     c.c_name,
-    c.c_address,
-    c.c_phone,
     c.c_mktsegment,
     n.n_name,
-    r.r_name,
-    c.c_acctbal
+    r.r_name
 FROM plata.tbl_customer c
 LEFT JOIN plata.tbl_nation n ON c.c_nationkey = n.n_nationkey
 LEFT JOIN plata.tbl_region r ON n.n_regionkey = r.r_regionkey;
 
--- DIM_PRODUCT (normalizada con brand, container y proveedor)
-INSERT INTO oro.dim_product (product_key, product_name, manufacturer, brand, type, size, container, supplier_name, retail_price)
+-- DIM_PRODUCTO (con marca, tipo y nombre del proveedor)
+INSERT INTO oro.dim_producto (producto_pk, nombre_producto, fabricante, marca, tipo_producto, nombre_proveedor)
 SELECT
-    p.p_partkey,
+    p.p_partkey::BIGINT,
     p.p_name,
     p.p_mfgr,
     b.b_brandname,
     p.p_type,
-    p.p_size,
-    con.c_container AS container,
-    sup.supplier_name,
-    p.p_retailprice
+    sup.supplier_name
 FROM plata.tbl_part p
 LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey
-LEFT JOIN plata.tbl_container con ON p.p_container = con.c_containerkey
 LEFT JOIN (
     SELECT ps.ps_partkey, s.s_name AS supplier_name,
            ROW_NUMBER() OVER (PARTITION BY ps.ps_partkey ORDER BY ps.ps_supplycost) AS rn
@@ -66,39 +60,28 @@ LEFT JOIN (
     JOIN plata.tbl_supplier s ON ps.ps_suppkey = s.s_suppkey
 ) sup ON sup.ps_partkey = p.p_partkey AND sup.rn = 1;
 
--- FACT_SALES
-INSERT INTO oro.fact_sales (
-    sales_key, order_id, line_number, customer_key, product_key,
-    order_date_key, ship_date_key, commit_date_key, receipt_date_key,
-    quantity, extended_price, discount, tax, revenue,
-    order_status, order_priority, return_flag, line_status, ship_mode, ship_instruct
+-- FACTURA (tabla de hechos)
+INSERT INTO oro.factura (
+    factura_pk, fecha_venta, cliente_fk, producto_fk,
+    cantidad_de_producto, precio_bruto, porcentaje_descuento,
+    porcentaje_impuesto, venta_neta, monto_impuesto
 )
 SELECT
-    ROW_NUMBER() OVER () AS sales_key,
-    o.o_orderkey,
-    l.l_linenumber,
-    o.o_custkey,
-    l.l_partkey,
-    CAST(strftime(o.o_orderdate, '%Y%m%d') AS INTEGER),
-    CAST(strftime(l.l_shipdate, '%Y%m%d') AS INTEGER),
-    CAST(strftime(l.l_commitdate, '%Y%m%d') AS INTEGER),
-    CAST(strftime(l.l_receiptdate, '%Y%m%d') AS INTEGER),
-    l.l_quantity,
-    l.l_extendedprice,
-    l.l_discount,
-    l.l_tax,
-    ROUND(l.l_extendedprice * (1 - l.l_discount) * (1 + l.l_tax), 2),
-    o.o_orderstatus,
-    o.o_orderpriority,
-    l.l_returnflag,
-    l.l_linestatus,
-    l.l_shipmode,
-    l.l_shipinstruct
+    ROW_NUMBER() OVER ()::BIGINT AS factura_pk,
+    CAST(strftime(o.o_orderdate, '%Y%m%d') AS BIGINT) AS fecha_venta,
+    o.o_custkey::BIGINT AS cliente_fk,
+    l.l_partkey::BIGINT AS producto_fk,
+    CAST(l.l_quantity AS BIGINT) AS cantidad_de_producto,
+    l.l_extendedprice AS precio_bruto,
+    l.l_discount AS porcentaje_descuento,
+    l.l_tax AS porcentaje_impuesto,
+    ROUND(l.l_extendedprice * (1 - l.l_discount), 2) AS venta_neta,
+    ROUND(l.l_extendedprice * (1 - l.l_discount) * l.l_tax, 2) AS monto_impuesto
 FROM plata.tbl_lineitem l
 JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey;
 
 -- VERIFICACIÓN
-SELECT 'dim_date' AS tabla, COUNT(*) AS filas FROM oro.dim_date
-UNION ALL SELECT 'dim_customer', COUNT(*) FROM oro.dim_customer
-UNION ALL SELECT 'dim_product', COUNT(*) FROM oro.dim_product
-UNION ALL SELECT 'fact_sales', COUNT(*) FROM oro.fact_sales;
+SELECT 'dim_tiempo' AS tabla, COUNT(*) AS filas FROM oro.dim_tiempo
+UNION ALL SELECT 'dim_cliente', COUNT(*) FROM oro.dim_cliente
+UNION ALL SELECT 'dim_producto', COUNT(*) FROM oro.dim_producto
+UNION ALL SELECT 'factura', COUNT(*) FROM oro.factura;

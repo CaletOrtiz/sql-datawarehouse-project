@@ -26,10 +26,10 @@ flowchart LR
     end
 
     subgraph ORO["Capa ORO (star schema)"]
-        O1[dim_date]
-        O2[dim_customer]
-        O3[dim_product]
-        O4[fact_sales]
+        O1[dim_tiempo]
+        O2[dim_cliente]
+        O3[dim_producto]
+        O4[factura]
     end
 
     DB[(DuckDB<br/>data/dwh.duckdb)]
@@ -52,7 +52,7 @@ flowchart TD
     E --> F[plata/ddl_plata.sql<br/>CREATE TABLE plata.*]
     F --> G[plata/etl.sql<br/>INSERT + limpieza + brand/container]
     G --> H[oro/ddl_oro.sql<br/>CREATE TABLE oro.* estrella]
-    H --> I[oro/etl_oro.sql<br/>dim_date, dim_*, fact_sales]
+    H --> I[oro/etl_oro.sql<br/>dim_tiempo, dim_*, factura]
     I --> J[Consultas / Dashboard]
 ```
 
