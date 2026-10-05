@@ -20,11 +20,8 @@ flowchart LR
 ## Volúmenes cargados
 
 ```mermaid
-xychart-beta
-    title "Filas por entidad (fuente = bronce)"
-    x-axis [region, nation, supplier, brand, container, part, partsupp, customer, orders, lineitem]
-    y-axis "Filas" 0 --> 62000
-    bar [5, 25, 100, 25, 40, 2000, 8000, 1500, 15000, 60175]
+flowchart LR
+    V1[region: 5] --- V2[nation: 25] --- V3[supplier: 100] --- V4[brand: 25] --- V5[container: 40] --- V6[part: 2000] --- V7[partsupp: 8000] --- V8[customer: 1500] --- V9[orders: 15000] --- V10[lineitem: 60175]
 ```
 
 | Capa | Tabla | Filas |

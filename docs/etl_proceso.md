@@ -3,7 +3,7 @@
 ```mermaid
 flowchart LR
     subgraph E1["BRONCE: Extract + Load"]
-        A1[Archivos .tbl<br/>sources/tbl] -->|COPY CSV '|'| A2[bronce.tbl_*]
+        A1[Archivos .tbl en sources/tbl] -->|COPY CSV delimitador pipe| A2[bronce.tbl_*]
     end
 
     subgraph E2["PLATA: Transform + Load"]
@@ -23,13 +23,13 @@ flowchart LR
 ```mermaid
 flowchart TD
     subgraph PART["tbl_part"]
-        PP[p_brand / p_container → catálogos]
+        PP[p_brand y p_container se normalizan]
         PP --> PB[tbl_brand: b_brandkey = ROW_NUMBER]
         PP --> PC[tbl_container: c_containerkey = ROW_NUMBER]
     end
     subgraph ORD["tbl_orders"]
         PO[o_orderpriority]
-        PO --> PO2[split_part '-', 2<br/>'HIGH-URGENT' → 'URGENT']
+        PO --> PO2[split_part con guion, 2<br/>HIGH-URGENT a URGENT]
     end
     subgraph SUPP["tbl_supplier"]
         PS[s_address] --> PS2[TRIM]
@@ -39,17 +39,16 @@ flowchart TD
 ## Checks de calidad (bronce_check.sql)
 
 ```mermaid
-mindmap
-  root((Checks))
-    NULLs y duplicados en PKs
-    Espacios en CHAR (TRIM)
-    Fechas inválidas
-    shipdate vs orderdate
-    receiptdate vs shipdate
-    FKs inválidas
-    Valores CHAR fuera de catálogo
-    acctbal negativos
-    discount/tax fuera de rango o > 2 decimales
+flowchart TD
+    C[Checks de calidad sobre bronce] --> C1[NULLs y duplicados en PKs]
+    C --> C2[Espacios en CHAR - TRIM]
+    C --> C3[Fechas inválidas]
+    C --> C4[shipdate vs orderdate]
+    C --> C5[receiptdate vs shipdate]
+    C --> C6[FKs inválidas]
+    C --> C7[Valores CHAR fuera de catálogo]
+    C --> C8[acctbal negativos]
+    C --> C9[discount/tax fuera de rango o más de 2 decimales]
 ```
 
 ## Comandos para ejecutar todo

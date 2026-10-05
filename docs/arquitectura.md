@@ -16,7 +16,7 @@ flowchart LR
     end
 
     subgraph BRONCE["Capa BRONCE (raw)"]
-        B[Tablas espejo sin transformaciones<br/>COPY CSV '|' desde .tbl]
+        B[Tablas espejo sin transformaciones<br/>COPY CSV con delimitador pipe]
     end
 
     subgraph PLATA["Capa PLATA (cleansed)"]
@@ -35,9 +35,9 @@ flowchart LR
 
     DB[(DuckDB<br/>data/dwh.duckdb)]
 
-    SRC -->|COPY FORMAT CSV DELIMITER '|'| BRONCE
-    BRONCE -->|etl.sql<br/>limpieza + validación| PLATA
-    PLATA -->|etl_oro.sql<br/>modelado dimensional| ORO
+    SRC -->|COPY CSV delimitador pipe| BRONCE
+    BRONCE -->|etl.sql: limpieza y validación| PLATA
+    PLATA -->|etl_oro.sql: modelado dimensional| ORO
     BRONCE -.->|bronce_check.sql| CHK[(Checks de calidad)]
     ORO --> DB
 ```
