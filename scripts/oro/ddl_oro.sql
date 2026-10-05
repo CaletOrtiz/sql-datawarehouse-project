@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS oro.dim_producto (
     fabricante       VARCHAR(30),
     marca            VARCHAR(25),
     tipo_producto    VARCHAR(25),
-    nombre_proveedor VARCHAR(40),
     dwh_created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

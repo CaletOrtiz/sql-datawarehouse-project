@@ -42,23 +42,16 @@ FROM plata.tbl_customer c
 LEFT JOIN plata.tbl_nation n ON c.c_nationkey = n.n_nationkey
 LEFT JOIN plata.tbl_region r ON n.n_regionkey = r.r_regionkey;
 
--- DIM_PRODUCTO (con marca, tipo y nombre del proveedor)
-INSERT INTO oro.dim_producto (producto_pk, nombre_producto, fabricante, marca, tipo_producto, nombre_proveedor)
+-- DIM_PRODUCTO
+INSERT INTO oro.dim_producto (producto_pk, nombre_producto, fabricante, marca, tipo_producto)
 SELECT
     p.p_partkey::BIGINT,
     p.p_name,
     p.p_mfgr,
     b.b_brandname,
-    p.p_type,
-    sup.supplier_name
+    p.p_type
 FROM plata.tbl_part p
-LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey
-LEFT JOIN (
-    SELECT ps.ps_partkey, s.s_name AS supplier_name,
-           ROW_NUMBER() OVER (PARTITION BY ps.ps_partkey ORDER BY ps.ps_supplycost) AS rn
-    FROM plata.tbl_partsupp ps
-    JOIN plata.tbl_supplier s ON ps.ps_suppkey = s.s_suppkey
-) sup ON sup.ps_partkey = p.p_partkey AND sup.rn = 1;
+LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey;
 
 -- FACTURA (tabla de hechos)
 INSERT INTO oro.factura (
@@ -81,3 +74,28 @@ FROM plata.tbl_lineitem l
 JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey
 WHERE o.o_orderdate >= DATE '1992-01-01'
   AND o.o_orderdate < DATE '1998-01-01';
+
+-- VENTA NETA POR REGION Y NACION DEL CLIENTE
+SELECT
+    c.regio_nombre AS region,
+    c.pais_nombre AS nacion,
+    ROUND(SUM(f.venta_neta), 2) AS venta_neta_total
+FROM oro.factura f
+JOIN oro.dim_cliente c ON f.cliente_fk = c.cliente_pk
+GROUP BY c.regio_nombre, c.pais_nombre
+ORDER BY venta_neta_total DESC, region, nacion;
+
+-- TOP 10 PRODUCTOS POR VENTA NETA EN 1997
+SELECT
+    COALESCE(p.marca, 'Sin marca') AS marca,
+    f.producto_fk AS producto_pk,
+    p.nombre_producto,
+    SUM(f.cantidad_de_producto) AS unidades_vendidas,
+    ROUND(SUM(f.venta_neta), 2) AS venta_neta_total
+FROM oro.factura f
+JOIN oro.dim_producto p ON f.producto_fk = p.producto_pk
+JOIN oro.dim_tiempo t ON f.fecha_venta = t.tiempo_pk
+WHERE t.anio = 1997
+GROUP BY p.marca, f.producto_fk, p.nombre_producto
+ORDER BY venta_neta_total DESC, unidades_vendidas DESC, p.nombre_producto
+LIMIT 10;
