@@ -39,7 +39,7 @@ HAVING COUNT(*)>1 OR s_suppkey IS NULL;
 SELECT ps_partkey, ps_suppkey, COUNT(*) AS DUPLICADOS
 FROM bronce.tbl_partsupp
 GROUP BY ps_partkey, ps_suppkey
-HAVING COUNT(*)>1 OR ps_partkey IS NULL OR ps_suppkey IS NULL
+HAVING COUNT(*)>1 OR ps_partkey IS NULL OR ps_suppkey IS NULL;
 
 SELECT r_regionkey, COUNT(*) AS DUPLICADOS
 FROM bronce.tbl_region

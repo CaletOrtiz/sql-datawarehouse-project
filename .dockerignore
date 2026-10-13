@@ -1,0 +1,7 @@
+.git
+.vscode
+data/
+docs/
+sources/tbl/*.tbl
+*.duckdb
+*.duckdb.wal

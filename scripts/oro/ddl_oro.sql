@@ -52,6 +52,9 @@ CREATE TABLE IF NOT EXISTS oro.dim_producto (
 
 CREATE TABLE IF NOT EXISTS oro.factura (
     factura_pk            BIGINT PRIMARY KEY,
+    numero_orden          BIGINT NOT NULL,
+    numero_linea          BIGINT NOT NULL,
+    proveedor_fk          BIGINT NOT NULL,
     fecha_venta           BIGINT,               -- FK a dim_tiempo.tiempo_pk
     cliente_fk            BIGINT,               -- FK a dim_cliente.cliente_pk
     producto_fk           BIGINT,               -- FK a dim_producto.producto_pk
@@ -61,5 +64,6 @@ CREATE TABLE IF NOT EXISTS oro.factura (
     porcentaje_impuesto   DECIMAL(3,2),
     venta_neta            DECIMAL(15,2),
     monto_impuesto        DECIMAL(15,2),
-    dwh_created_date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    dwh_created_date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (numero_orden, numero_linea)
 );

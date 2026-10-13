@@ -55,12 +55,18 @@ LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey;
 
 -- FACTURA (tabla de hechos)
 INSERT INTO oro.factura (
-    factura_pk, fecha_venta, cliente_fk, producto_fk,
+    factura_pk, numero_orden, numero_linea, proveedor_fk,
+    fecha_venta, cliente_fk, producto_fk,
     cantidad_de_producto, precio_bruto, porcentaje_descuento,
     porcentaje_impuesto, venta_neta, monto_impuesto
 )
 SELECT
-    ROW_NUMBER() OVER ()::BIGINT AS factura_pk,
+    ROW_NUMBER() OVER (
+        ORDER BY l.l_orderkey, l.l_linenumber
+    )::BIGINT AS factura_pk,
+    l.l_orderkey::BIGINT AS numero_orden,
+    l.l_linenumber::BIGINT AS numero_linea,
+    l.l_suppkey::BIGINT AS proveedor_fk,
     CAST(strftime(o.o_orderdate, '%Y%m%d') AS BIGINT) AS fecha_venta,
     o.o_custkey::BIGINT AS cliente_fk,
     l.l_partkey::BIGINT AS producto_fk,

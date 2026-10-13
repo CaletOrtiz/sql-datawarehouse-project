@@ -8,11 +8,11 @@ SELECT
     c.nombre_cliente,
     c.segmento_mercado,
     c.pais_nombre,
-    COUNT(DISTINCT f.factura_pk) AS total_pedidos,
+    COUNT(DISTINCT f.numero_orden) AS total_pedidos,
     SUM(f.venta_neta) AS total_venta_neta,
     SUM(f.cantidad_de_producto) AS total_unidades,
     -- Ticket medio por pedido del cliente
-    ROUND(SUM(f.venta_neta) / NULLIF(COUNT(DISTINCT f.factura_pk), 0), 2) AS ticket_medio
+    ROUND(SUM(f.venta_neta) / NULLIF(COUNT(DISTINCT f.numero_orden), 0), 2) AS ticket_medio
 FROM oro.factura f
 JOIN oro.dim_cliente c ON f.cliente_fk = c.cliente_pk
 GROUP BY 
@@ -32,7 +32,7 @@ SELECT
     c.regio_nombre AS region,
     c.pais_nombre AS pais,
     t.anio,
-    COUNT(DISTINCT f.factura_pk) AS total_facturas,
+    COUNT(DISTINCT f.numero_orden) AS total_facturas,
     SUM(f.precio_bruto) AS total_venta_bruta,
     SUM(f.venta_neta) AS total_venta_neta,
     SUM(f.monto_impuesto) AS total_impuesto
@@ -62,11 +62,7 @@ SELECT
     SUM(f.cantidad_de_producto) AS total_unidades_suministradas,
     SUM(f.venta_neta) AS total_venta_neta
 FROM oro.factura f
-JOIN plata.tbl_lineitem l 
-    ON f.factura_pk = l.l_orderkey 
-   AND f.producto_fk = l.l_partkey
-JOIN plata.tbl_supplier s 
-    ON l.l_suppkey = s.s_suppkey
+JOIN plata.tbl_supplier s ON f.proveedor_fk = s.s_suppkey
 JOIN plata.tbl_nation n 
     ON s.s_nationkey = n.n_nationkey
 JOIN plata.tbl_region r 
@@ -97,8 +93,8 @@ SELECT
     f.venta_neta AS venta_neta_afectada
 FROM plata.tbl_lineitem l
 JOIN oro.factura f 
-    ON l.l_orderkey = f.factura_pk 
-   AND l.l_partkey = f.producto_fk
+    ON l.l_orderkey = f.numero_orden
+   AND l.l_linenumber = f.numero_linea
 JOIN oro.dim_cliente c ON f.cliente_fk = c.cliente_pk
 JOIN oro.dim_producto p ON f.producto_fk = p.producto_pk
 JOIN oro.dim_tiempo t ON f.fecha_venta = t.tiempo_pk
@@ -112,7 +108,7 @@ CREATE OR REPLACE VIEW oro.vw_rfv05_ventas_segmento AS
 SELECT 
     c.segmento_mercado,
     t.anio,
-    COUNT(DISTINCT f.factura_pk) AS total_pedidos,
+    COUNT(DISTINCT f.numero_orden) AS total_pedidos,
     SUM(f.cantidad_de_producto) AS unidades_vendidas,
     SUM(f.precio_bruto) AS venta_bruta_total,
     SUM(f.venta_neta) AS venta_neta_total

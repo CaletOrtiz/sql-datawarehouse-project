@@ -50,14 +50,15 @@ flowchart LR
 ```mermaid
 %%{init: {'theme':'base','themeVariables':{'primaryColor':'#111111','primaryTextColor':'#F5F5F5','primaryBorderColor':'#FF6B1A','lineColor':'#FF6B1A'}}}%%
 erDiagram
-  fact_sales }o--|| dim_tiempo : fecha
-  fact_sales }o--|| dim_cliente : cliente
-  fact_sales }o--|| dim_producto : producto
+  factura }o--|| dim_tiempo : fecha
+  factura }o--|| dim_cliente : cliente
+  factura }o--|| dim_producto : producto
 ```
 
-- **Tabla de hechos:** `fact_sales`, construida a partir de `lineitem`.
-- **Llaves:** sustitutas (`_pk`) y de negocio (`_bk`).
-- **Regla de carga:** solo órdenes finalizadas, con `l_receiptdate` y sin devolución.
+- **Tabla de hechos:** `factura`, construida a partir de `lineitem`.
+- **Llaves:** sustitutas (`_pk`) y de negocio (`numero_orden`, `numero_linea`).
+- **Grano:** una fila por línea de pedido; incluye líneas devueltas y no devueltas.
+- **Periodo:** órdenes con fecha entre 1992-01-01 y 1997-12-31.
 
 <br>
 
@@ -67,24 +68,31 @@ erDiagram
 git clone https://github.com/CaletOrtiz/sql-datawarehouse-project.git
 cd sql-datawarehouse-project
 
-# 1. Generar datos (factor de escala 1 ≈ 1 GB)
-./dbgen -s 1
-
-# 2. Cargar Bronce
-# 3. Transformar a Plata
-# 4. Construir Oro
+# Ejecutar el pipeline en Docker (factor TPC-H por defecto: 0.01)
+docker build -t sql-datawarehouse .
+docker run --rm \
+  -e TPCH_SCALE_FACTOR=0.01 \
+  -v "$PWD/data:/app/data" \
+  -v "$PWD/sources/tbl:/app/sources/tbl" \
+  sql-datawarehouse
 ```
 
 > [!NOTE]
-> Completa los pasos 2 a 4 con el nombre de tus scripts.
+> El workflow de GitHub Actions repite este proceso en cada push, pull request
+> o ejecución manual. Al terminar correctamente, descarga `data/dwh.duckdb`
+> desde la sección **Actions → Build data warehouse → Artifacts**. El artefacto
+> se conserva durante 14 días. En CI se usa un factor de escala 0.01 para
+> mantener una ejecución ligera; se puede cambiar en `.github/workflows/data-warehouse.yml`.
 
 <br>
 
 ## 🛠️ Estructura del Repositorio
 
 ```text
-├── data/              # Carpeta ignorada en Git (almacena el .sqlite local)
+├── data/              # Base DuckDB generada; ignorada en Git
 ├── docs/              # Documentación técnica: arquitectura, ERD por capa, proceso ETL
+├── .github/workflows/ # Construcción Docker, ETL, validación y publicación del artefacto
+├── Dockerfile         # Imagen reproducible del pipeline
 ├── scripts/           # SQL de las capas bronce, plata y oro
 │   ├── bronce/        # DDL + carga de fuentes .tbl
 │   ├── plata/         # Checks de calidad + DDL + ETL bronce→plata
@@ -99,5 +107,3 @@ cd sql-datawarehouse-project
 ---
 
 <div align="center"><sub>Hecho por <a href="https://github.com/CaletOrtiz">Calet Ortiz</a></sub></div>
-
-
