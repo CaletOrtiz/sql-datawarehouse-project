@@ -147,7 +147,7 @@ model InformeVentas
 			summarizeBy: none
 
 		column fecha_completa
-			dataType: date
+			dataType: dateTime
 			sourceColumn: fecha_completa
 			summarizeBy: none
 
@@ -427,12 +427,12 @@ model InformeVentas
 			summarizeBy: none
 
 		column fecha_despacho
-			dataType: date
+			dataType: dateTime
 			sourceColumn: fecha_despacho
 			summarizeBy: none
 
 		column fecha_comprometida
-			dataType: date
+			dataType: dateTime
 			sourceColumn: fecha_comprometida
 			summarizeBy: none
 
