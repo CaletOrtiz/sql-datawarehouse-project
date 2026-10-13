@@ -1,0 +1,60 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "09ea0324ac1e46cb8c40",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1022,
+    "height": 160,
+    "width": 300,
+    "tabOrder": 1022
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "Pct Lineas Retrasadas"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.Pct Lineas Retrasadas",
+              "nativeQueryRef": "Pct Lineas Retrasadas"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'% de líneas retrasadas'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "fe82769289a04c40ba98",
+  "position": {
+    "x": 720,
+    "y": 180,
+    "z": 1007,
+    "height": 360,
+    "width": 560,
+    "tabOrder": 1007
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv05_ventas_segmento"
+                    }
+                  },
+                  "Property": "segmento_mercado"
+                }
+              },
+              "queryRef": "vw_rfv05_ventas_segmento.segmento_mercado",
+              "nativeQueryRef": "segmento_mercado"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv05_ventas_segmento"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "vw_rfv05_ventas_segmento.anio",
+              "nativeQueryRef": "anio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv05_ventas_segmento"
+                    }
+                  },
+                  "Property": "total_pedidos"
+                }
+              },
+              "queryRef": "vw_rfv05_ventas_segmento.total_pedidos",
+              "nativeQueryRef": "total_pedidos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv05_ventas_segmento"
+                    }
+                  },
+                  "Property": "venta_neta_total"
+                }
+              },
+              "queryRef": "vw_rfv05_ventas_segmento.venta_neta_total",
+              "nativeQueryRef": "venta_neta_total"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Qué segmentos impulsan la venta'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

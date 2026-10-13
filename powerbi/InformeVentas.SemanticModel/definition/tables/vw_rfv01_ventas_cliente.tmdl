@@ -1,0 +1,64 @@
+table vw_rfv01_ventas_cliente
+	lineageTag: 55555555-5555-5555-5555-555555555555
+
+	column cliente_pk
+		dataType: int64
+		lineageTag: 5134a757-8fa4-4701-b1ca-eea4f2771291
+		summarizeBy: none
+		sourceColumn: cliente_pk
+
+	column nombre_cliente
+		dataType: string
+		lineageTag: d630572a-cbdb-49b3-b3ca-b878e4404f9b
+		sourceColumn: nombre_cliente
+
+	column segmento_mercado
+		dataType: string
+		lineageTag: ec386571-9b3f-4958-8230-613a236a2bbf
+		sourceColumn: segmento_mercado
+
+	column pais_nombre
+		dataType: string
+		lineageTag: e9803af2-152f-47aa-92f5-dd44cfb537b9
+		sourceColumn: pais_nombre
+
+	column total_pedidos
+		dataType: int64
+		lineageTag: 95b2bc19-6291-405b-ab5c-a3c249a02139
+		summarizeBy: sum
+		sourceColumn: total_pedidos
+
+	column total_venta_neta
+		dataType: double
+		lineageTag: e720c93e-3435-4254-810b-41d4f979cf6b
+		summarizeBy: sum
+		sourceColumn: total_venta_neta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_unidades
+		dataType: double
+		lineageTag: b5af1fbb-2194-49dd-a88f-bf1765234335
+		summarizeBy: sum
+		sourceColumn: total_unidades
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ticket_medio
+		dataType: double
+		lineageTag: cca64dff-ebf2-400e-9805-bfcc2b6d4e21
+		summarizeBy: sum
+		sourceColumn: ticket_medio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv01_ventas_cliente = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv01_ventas_cliente.parquet"))
+				in
+					Source
+

@@ -1,0 +1,117 @@
+table vw_rfv04_ventas_retrasadas
+	lineageTag: 88888888-8888-8888-8888-888888888888
+
+	measure 'Lineas Retrasadas' = COUNTROWS ( vw_rfv04_ventas_retrasadas )
+		formatString: #,0
+		lineageTag: 0deb1b9c-689a-47bb-8caf-126b6097e95b
+
+	measure 'Venta Afectada Retrasos' = SUM ( vw_rfv04_ventas_retrasadas[venta_neta_afectada] )
+		formatString: #,0.00
+		lineageTag: 8fa0ed2d-90c8-4dd1-b01e-a9bcd8ea047c
+
+	measure 'Pct Lineas Retrasadas' = DIVIDE ( [Lineas Retrasadas], [Nro Lineas] )
+		formatString: 0.00%
+		lineageTag: a7fefe73-5f89-4bdb-a9e6-cff2619ec723
+
+	measure 'Dias Retraso Promedio' = AVERAGE ( vw_rfv04_ventas_retrasadas[dias_de_retraso] )
+		formatString: #,0.0
+		lineageTag: c4510b71-5403-435c-a7c2-01ecf05e8ee2
+
+	column anio
+		dataType: int64
+		lineageTag: fd6abd2e-718a-41c5-ad2b-da06148919ec
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes_nombre
+		dataType: string
+		lineageTag: 0134aa9e-4a1c-46e2-8281-59feb81b0d71
+		summarizeBy: none
+		sourceColumn: mes_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_cliente
+		dataType: string
+		lineageTag: 82284cd5-e80b-49be-ac6b-9303ccd5187f
+		summarizeBy: none
+		sourceColumn: nombre_cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column nombre_producto
+		dataType: string
+		lineageTag: 5de9ad96-052c-4ba6-bf6c-a157d6345e22
+		summarizeBy: none
+		sourceColumn: nombre_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_orden
+		dataType: int64
+		lineageTag: 687bdf4d-274e-4040-8801-9cb7c86b0174
+		summarizeBy: sum
+		sourceColumn: numero_orden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_despacho
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 9dc7550c-623b-414d-9c40-bd5487e1fb9a
+		summarizeBy: none
+		sourceColumn: fecha_despacho
+
+		variation Variación
+			isDefault
+			relationship: 748d0dfc-9927-4295-a221-91b2b8f41439
+			defaultHierarchy: LocalDateTable_8f8695bb-9699-4602-ab8b-90cf611ca6d9.'Jerarquía de fechas'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column fecha_comprometida
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: f2f3ba11-74be-41bb-9eed-273cc50c21a8
+		summarizeBy: none
+		sourceColumn: fecha_comprometida
+
+		variation Variación
+			isDefault
+			relationship: 021a2d1d-f08c-4248-91ac-70ea96ba3198
+			defaultHierarchy: LocalDateTable_8e0684a4-b80c-48d9-a8f3-1f00bbcbb49b.'Jerarquía de fechas'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column dias_de_retraso
+		dataType: int64
+		lineageTag: f36e0c76-daa7-4316-8abd-a0631eed3c40
+		summarizeBy: sum
+		sourceColumn: dias_de_retraso
+
+		annotation SummarizationSetBy = Automatic
+
+	column cantidad_de_producto
+		dataType: int64
+		lineageTag: 8e298491-8d8e-4d9a-81aa-908e10cb5668
+		summarizeBy: sum
+		sourceColumn: cantidad_de_producto
+
+	column venta_neta_afectada
+		dataType: double
+		lineageTag: ef0d057c-f113-4597-afd0-be64f7761588
+		summarizeBy: sum
+		sourceColumn: venta_neta_afectada
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv04_ventas_retrasadas = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv04_ventas_retrasadas.parquet"))
+				in
+					Source
+

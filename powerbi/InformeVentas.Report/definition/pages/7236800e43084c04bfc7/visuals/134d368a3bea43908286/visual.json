@@ -1,0 +1,144 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "134d368a3bea43908286",
+  "position": {
+    "x": 640,
+    "y": 0,
+    "z": 1020,
+    "height": 400,
+    "width": 640,
+    "tabOrder": 1020
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "fabricante"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.fabricante",
+              "nativeQueryRef": "fabricante"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "marca"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.marca",
+              "nativeQueryRef": "marca"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "tipo_producto"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.tipo_producto",
+              "nativeQueryRef": "tipo_producto"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.anio",
+              "nativeQueryRef": "anio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "unidades_vendidas"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.unidades_vendidas",
+              "nativeQueryRef": "unidades_vendidas"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "total_venta_bruta"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.total_venta_bruta",
+              "nativeQueryRef": "total_venta_bruta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv06_ventas_marca_tipo"
+                    }
+                  },
+                  "Property": "total_venta_neta"
+                }
+              },
+              "queryRef": "vw_rfv06_ventas_marca_tipo.total_venta_neta",
+              "nativeQueryRef": "total_venta_neta"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Detalle por fabricante, marca y tipo'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

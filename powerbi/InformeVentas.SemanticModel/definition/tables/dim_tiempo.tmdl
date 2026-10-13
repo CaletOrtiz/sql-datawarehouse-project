@@ -1,0 +1,100 @@
+table dim_tiempo
+	lineageTag: 22222222-2222-2222-2222-222222222222
+
+	column tiempo_pk
+		dataType: int64
+		lineageTag: 24ac07a0-c4ae-4858-9d2a-f42e9fc143e3
+		summarizeBy: none
+		sourceColumn: tiempo_pk
+
+	column anio
+		dataType: int64
+		lineageTag: 6d0d22ba-d80f-4943-b00c-36e75e76754f
+		summarizeBy: sum
+		sourceColumn: anio
+
+		annotation SummarizationSetBy = Automatic
+
+	column mes
+		dataType: int64
+		lineageTag: 5906c057-cf7b-419d-90b5-0c6854c7e4a4
+		summarizeBy: sum
+		sourceColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia
+		dataType: int64
+		lineageTag: d137c929-c568-4428-ab25-255e2fb9c7e4
+		summarizeBy: sum
+		sourceColumn: dia
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_completa
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3df91a63-817d-4aeb-9d90-3319b01ad530
+		summarizeBy: none
+		sourceColumn: fecha_completa
+
+		variation Variación
+			isDefault
+			relationship: 858ed067-3326-44ba-9994-be917d96283e
+			defaultHierarchy: LocalDateTable_e7f57384-c231-4bc2-b5df-1083f3347232.'Jerarquía de fechas'
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column mes_nombre
+		dataType: string
+		lineageTag: fbc00a84-4292-4b35-a724-0193dff25ec1
+		summarizeBy: none
+		sourceColumn: mes_nombre
+		sortByColumn: mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column dia_semana
+		dataType: string
+		lineageTag: b80e6f98-daba-4edb-b77a-f07f4f6ea05e
+		summarizeBy: none
+		sourceColumn: dia_semana
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre
+		dataType: int64
+		lineageTag: f98342e4-2cea-4ed5-ad39-6dc42ef8b607
+		summarizeBy: sum
+		sourceColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column trimestre_nombre
+		dataType: string
+		lineageTag: afc9d909-8359-451c-b0ee-503910a775b9
+		summarizeBy: none
+		sourceColumn: trimestre_nombre
+		sortByColumn: trimestre
+
+		annotation SummarizationSetBy = Automatic
+
+	column dwh_created_date
+		dataType: dateTime
+		lineageTag: 80b2cec5-62b4-4365-9f7b-881d1f61d150
+		summarizeBy: none
+		sourceColumn: dwh_created_date
+
+		variation Variación
+			isDefault
+			relationship: 199f9dee-f887-4fa0-b34a-64d5f8978897
+			defaultHierarchy: LocalDateTable_6374d4ab-bc51-4adb-81fa-890730c4f9b0.'Jerarquía de fechas'
+
+	partition dim_tiempo = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\dim_tiempo.parquet"))
+				in
+					Source
+

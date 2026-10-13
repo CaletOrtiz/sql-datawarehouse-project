@@ -1,0 +1,174 @@
+table factura
+	lineageTag: 11111111-1111-1111-1111-111111111111
+
+	measure 'Venta Neta' = SUM ( factura[venta_neta] )
+		formatString: #,0.00
+		lineageTag: cce14770-29fd-4421-8716-9920084a7c35
+
+	measure 'Venta Bruta' = SUM ( factura[precio_bruto] )
+		formatString: #,0.00
+		lineageTag: d8596d89-c812-424b-9f1e-f7653c7cca0f
+
+	measure 'Monto Impuesto' = SUM ( factura[monto_impuesto] )
+		formatString: #,0.00
+		lineageTag: 234e5f79-d28d-4945-82f0-eb8d6c4e1b2f
+
+	measure 'Monto Descuento' = SUMX ( factura, factura[precio_bruto] * factura[porcentaje_descuento] )
+		formatString: #,0.00
+		lineageTag: 30926c3c-4845-4b1e-9496-9cfa96d38991
+
+	measure 'Unidades Vendidas' = SUM ( factura[cantidad_de_producto] )
+		formatString: #,0
+		lineageTag: 71361c27-00ad-4bb1-9fa8-fd94d1d02040
+
+	measure 'Nro Lineas' = COUNTROWS ( factura )
+		formatString: #,0
+		lineageTag: 41e1b9f8-bc00-4646-9275-b98233979adc
+
+	measure 'Nro Ordenes' = DISTINCTCOUNT ( factura[numero_orden] )
+		formatString: #,0
+		lineageTag: 47584eb2-e949-4cfa-8405-a48ceeba660f
+
+	measure 'Ticket Medio' = DIVIDE ( [Venta Neta], [Nro Lineas] )
+		formatString: #,0.00
+		lineageTag: 7cc08951-9194-4b7d-bc88-690967cc2d0d
+
+	measure 'Pct Descuento Efectivo' = DIVIDE ( [Monto Descuento], [Venta Bruta] )
+		formatString: 0.00%
+		lineageTag: c8c420a6-1580-419b-93d7-06031d263657
+
+	measure 'Venta Neta YTD' = TOTALYTD ( [Venta Neta], dim_tiempo[fecha_completa] )
+		formatString: #,0.00
+		lineageTag: b027306a-6bb0-40aa-899c-a43e66ba4a7d
+
+	measure 'Venta Neta Año Anterior' = CALCULATE ( [Venta Neta], SAMEPERIODLASTYEAR ( dim_tiempo[fecha_completa] ) )
+		formatString: #,0.00
+		lineageTag: 2dc0d8b3-d516-461d-a184-bf36d8b45f48
+
+	measure 'Var Neta YoY' = [Venta Neta] - [Venta Neta Año Anterior]
+		formatString: #,0.00
+		lineageTag: aabcad83-0868-4208-a7ca-e8c8407f6bee
+
+	measure 'Var Neta YoY %' = DIVIDE ( [Var Neta YoY], [Venta Neta Año Anterior] )
+		formatString: 0.00%
+		lineageTag: 066f0c58-edcc-44d2-bfda-893ce958be77
+
+	column factura_pk
+		dataType: int64
+		lineageTag: ce2fabaf-4153-404c-9273-203ed937df4c
+		summarizeBy: sum
+		sourceColumn: factura_pk
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_orden
+		dataType: int64
+		lineageTag: 67fd5cec-efcd-424b-bdf5-6cf519a73fe2
+		summarizeBy: sum
+		sourceColumn: numero_orden
+
+		annotation SummarizationSetBy = Automatic
+
+	column numero_linea
+		dataType: int64
+		lineageTag: 4df82293-fbaa-4bee-8041-8947572b1c95
+		summarizeBy: sum
+		sourceColumn: numero_linea
+
+		annotation SummarizationSetBy = Automatic
+
+	column proveedor_fk
+		dataType: int64
+		lineageTag: 2996d6e7-67ce-4382-95ca-c795dbd02fe6
+		summarizeBy: sum
+		sourceColumn: proveedor_fk
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_venta
+		dataType: int64
+		lineageTag: e4a33fec-2033-4dc3-9bd4-6f9d96e87c50
+		summarizeBy: none
+		sourceColumn: fecha_venta
+
+	column cliente_fk
+		dataType: int64
+		lineageTag: f2034192-6c88-4aca-af4c-8a76dffe2641
+		summarizeBy: none
+		sourceColumn: cliente_fk
+
+	column producto_fk
+		dataType: int64
+		lineageTag: 97341cc0-ebe0-4f65-a8d2-638c3f1c8243
+		summarizeBy: none
+		sourceColumn: producto_fk
+
+	column cantidad_de_producto
+		dataType: int64
+		lineageTag: ffb1a096-70dc-4b81-a8c4-761fc329c09a
+		summarizeBy: sum
+		sourceColumn: cantidad_de_producto
+
+	column precio_bruto
+		dataType: double
+		lineageTag: bf37c860-4186-4e7b-8222-50468ef000a2
+		summarizeBy: sum
+		sourceColumn: precio_bruto
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column porcentaje_descuento
+		dataType: double
+		lineageTag: 396c09a9-5456-48db-b5ff-7ca96e53fa3a
+		summarizeBy: sum
+		sourceColumn: porcentaje_descuento
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column porcentaje_impuesto
+		dataType: double
+		lineageTag: b12a0d7b-4aec-4856-bbc7-45e10972ebbd
+		summarizeBy: sum
+		sourceColumn: porcentaje_impuesto
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venta_neta
+		dataType: double
+		lineageTag: a313cf88-7417-4806-a7c7-e8f4ac0ed101
+		summarizeBy: sum
+		sourceColumn: venta_neta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column monto_impuesto
+		dataType: double
+		lineageTag: 69ae1889-0df6-48f7-bc67-8b60f51f07b1
+		summarizeBy: sum
+		sourceColumn: monto_impuesto
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column dwh_created_date
+		dataType: dateTime
+		lineageTag: 98654c5f-215c-43e6-b150-782453aef86a
+		summarizeBy: none
+		sourceColumn: dwh_created_date
+
+		variation Variación
+			isDefault
+			relationship: a19e39c1-5548-4551-881e-016ae8544c8a
+			defaultHierarchy: LocalDateTable_96f30b33-4b50-4c07-99ea-65f92e424980.'Jerarquía de fechas'
+
+	partition factura = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\factura.parquet"))
+				in
+					Source
+

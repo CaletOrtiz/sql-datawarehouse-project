@@ -1,0 +1,58 @@
+table vw_rfv03_ventas_proveedor
+	lineageTag: 77777777-7777-7777-7777-777777777777
+
+	measure 'Venta Neta Proveedores' = SUM ( vw_rfv03_ventas_proveedor[total_venta_neta] )
+		formatString: #,0.00
+		lineageTag: 28eb903c-bb6c-40dd-82df-a0e32d2af5f1
+
+	column proveedor_pk
+		dataType: int64
+		lineageTag: 23f26fd8-0d98-4c34-8b2d-99d70c51b3be
+		summarizeBy: none
+		sourceColumn: proveedor_pk
+
+	column proveedor_nombre
+		dataType: string
+		lineageTag: 5587a748-294f-4633-b597-52a7749865d7
+		sourceColumn: proveedor_nombre
+
+	column proveedor_pais
+		dataType: string
+		lineageTag: 756f0514-d6ba-4438-8926-970f5b83282d
+		sourceColumn: proveedor_pais
+
+	column proveedor_region
+		dataType: string
+		lineageTag: b21fde98-bbf0-4629-9988-13a3253e3fcd
+		sourceColumn: proveedor_region
+
+	column total_lineas_vendidas
+		dataType: int64
+		lineageTag: f902fcf8-9f2c-4e18-a8b3-5ee03b669e46
+		summarizeBy: sum
+		sourceColumn: total_lineas_vendidas
+
+	column total_unidades_suministradas
+		dataType: double
+		lineageTag: 11482fa5-1623-442a-905a-b6fa15a78743
+		summarizeBy: sum
+		sourceColumn: total_unidades_suministradas
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_venta_neta
+		dataType: double
+		lineageTag: bd9ae7ee-cb4a-4762-9ecc-33c70be7bd4b
+		summarizeBy: sum
+		sourceColumn: total_venta_neta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv03_ventas_proveedor = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv03_ventas_proveedor.parquet"))
+				in
+					Source
+

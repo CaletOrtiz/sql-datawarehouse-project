@@ -1,0 +1,56 @@
+table vw_rfv06_ventas_marca_tipo
+	lineageTag: aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa
+
+	column fabricante
+		dataType: string
+		lineageTag: a949a687-5934-4f76-be30-7dad89d285e9
+		sourceColumn: fabricante
+
+	column marca
+		dataType: string
+		lineageTag: 3e2fe5b2-d3b9-445d-90d5-7e283164061e
+		sourceColumn: marca
+
+	column tipo_producto
+		dataType: string
+		lineageTag: 4548b548-e132-4739-a345-8c632abea6fc
+		sourceColumn: tipo_producto
+
+	column anio
+		dataType: int64
+		lineageTag: ccbd9c22-9f6c-437f-9373-04c71d05941c
+		summarizeBy: none
+		sourceColumn: anio
+
+	column unidades_vendidas
+		dataType: double
+		lineageTag: b7ea74bc-9291-4354-a474-297d15ceb9bf
+		summarizeBy: sum
+		sourceColumn: unidades_vendidas
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_venta_bruta
+		dataType: double
+		lineageTag: 85084434-e1fc-43e9-b4d0-e78097b73336
+		summarizeBy: sum
+		sourceColumn: total_venta_bruta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_venta_neta
+		dataType: double
+		lineageTag: e58ee27b-6c21-4348-9dd7-c1dddfa90a03
+		summarizeBy: sum
+		sourceColumn: total_venta_neta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv06_ventas_marca_tipo = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv06_ventas_marca_tipo.parquet"))
+				in
+					Source
+

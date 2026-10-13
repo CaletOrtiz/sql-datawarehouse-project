@@ -1,0 +1,61 @@
+table vw_rfv07_descuentos_ventas
+	lineageTag: bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb
+
+	column anio
+		dataType: int64
+		lineageTag: dfef5208-dfa9-4f2e-a5ed-04c277a65034
+		summarizeBy: none
+		sourceColumn: anio
+
+	column mes_nombre
+		dataType: string
+		lineageTag: 8c06d00c-5c61-4979-9038-2dc9d6394738
+		sourceColumn: mes_nombre
+
+	column segmento_mercado
+		dataType: string
+		lineageTag: 00f9e273-3913-4175-b747-322eefb4bc3b
+		sourceColumn: segmento_mercado
+
+	column venta_bruta_total
+		dataType: double
+		lineageTag: 75499e6a-3380-4674-a6e4-bccf20788410
+		summarizeBy: sum
+		sourceColumn: venta_bruta_total
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column monto_descuento_total
+		dataType: double
+		lineageTag: 33fb98f7-bac1-4ce6-a7b8-bca3857ef531
+		summarizeBy: sum
+		sourceColumn: monto_descuento_total
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venta_neta_total
+		dataType: double
+		lineageTag: 5f4d6ef0-10ca-4225-a8ef-215351c8a293
+		summarizeBy: sum
+		sourceColumn: venta_neta_total
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pct_descuento_efectivo
+		dataType: double
+		lineageTag: a429b203-c591-472b-9843-1393d581fd72
+		summarizeBy: sum
+		sourceColumn: pct_descuento_efectivo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv07_descuentos_ventas = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv07_descuentos_ventas.parquet"))
+				in
+					Source
+

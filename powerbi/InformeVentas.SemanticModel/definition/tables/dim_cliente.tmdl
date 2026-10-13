@@ -1,0 +1,68 @@
+table dim_cliente
+	lineageTag: 33333333-3333-3333-3333-333333333333
+
+	measure 'Venta Top 10 Clientes' = CALCULATE ( [Venta Neta], TOPN ( 10, VALUES ( dim_cliente[nombre_cliente] ), [Venta Neta] ) )
+		formatString: #,0.00
+		lineageTag: e0fd4772-a06f-473f-88fc-2806704dabd4
+
+	measure 'Pct Concentracion Top 10' = DIVIDE ( [Venta Top 10 Clientes], [Venta Neta] )
+		formatString: 0.00%
+		lineageTag: bea3fd73-5ffc-4894-aa8c-161e436e8777
+
+	column cliente_pk
+		dataType: int64
+		lineageTag: d93b2b1b-4039-4e53-8e6e-d80b3942aa98
+		summarizeBy: none
+		sourceColumn: cliente_pk
+
+	column nombre_cliente
+		dataType: string
+		lineageTag: 12e684a5-ab00-43c2-95d6-cf6041711293
+		summarizeBy: none
+		sourceColumn: nombre_cliente
+
+		annotation SummarizationSetBy = Automatic
+
+	column segmento_mercado
+		dataType: string
+		lineageTag: fd5c3ad2-7e89-45aa-95e9-197983c3a593
+		summarizeBy: none
+		sourceColumn: segmento_mercado
+
+		annotation SummarizationSetBy = Automatic
+
+	column pais_nombre
+		dataType: string
+		lineageTag: c7cafc53-4b79-486f-ba0a-e63c764afc14
+		summarizeBy: none
+		sourceColumn: pais_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column regio_nombre
+		dataType: string
+		lineageTag: a1fae611-0eb1-4c94-89ad-54434c17226d
+		summarizeBy: none
+		sourceColumn: regio_nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column dwh_created_date
+		dataType: dateTime
+		lineageTag: 389d25f1-85d8-4693-a03e-dd064ed989dc
+		summarizeBy: none
+		sourceColumn: dwh_created_date
+
+		variation Variación
+			isDefault
+			relationship: 685c46d6-cb03-4b13-8177-f1c49114bfbb
+			defaultHierarchy: LocalDateTable_c955555b-86f7-4739-8aa0-d3eddea60f3a.'Jerarquía de fechas'
+
+	partition dim_cliente = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\dim_cliente.parquet"))
+				in
+					Source
+

@@ -1,0 +1,52 @@
+table vw_rfv05_ventas_segmento
+	lineageTag: 99999999-9999-9999-9999-999999999999
+
+	column segmento_mercado
+		dataType: string
+		lineageTag: b5d5dcb8-de45-4b04-acdf-aa8c02abb205
+		sourceColumn: segmento_mercado
+
+	column anio
+		dataType: int64
+		lineageTag: 9c4fd885-e91e-4cb2-85dc-1b2306bf56de
+		summarizeBy: none
+		sourceColumn: anio
+
+	column total_pedidos
+		dataType: int64
+		lineageTag: 0db289af-24bb-4ac9-9dd9-4ffafa4e4390
+		summarizeBy: sum
+		sourceColumn: total_pedidos
+
+	column unidades_vendidas
+		dataType: double
+		lineageTag: 46d55ffd-6e4b-43bd-8cff-0bb006625624
+		summarizeBy: sum
+		sourceColumn: unidades_vendidas
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venta_bruta_total
+		dataType: double
+		lineageTag: 46da56be-aca5-43f3-8d23-0345af90cecb
+		summarizeBy: sum
+		sourceColumn: venta_bruta_total
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column venta_neta_total
+		dataType: double
+		lineageTag: 879b9085-cc47-41c9-9317-d81355f8b915
+		summarizeBy: sum
+		sourceColumn: venta_neta_total
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv05_ventas_segmento = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv05_ventas_segmento.parquet"))
+				in
+					Source
+

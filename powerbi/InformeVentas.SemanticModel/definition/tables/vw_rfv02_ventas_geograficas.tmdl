@@ -1,0 +1,57 @@
+table vw_rfv02_ventas_geograficas
+	lineageTag: 66666666-6666-6666-6666-666666666666
+
+	column region
+		dataType: string
+		lineageTag: fd8fdfea-2cab-496f-ba14-a40e80055298
+		sourceColumn: region
+
+	column pais
+		dataType: string
+		lineageTag: 746b1118-693e-41ec-a51d-71d4214fbc17
+		sourceColumn: pais
+
+	column anio
+		dataType: int64
+		lineageTag: 91b186ff-b78f-45bf-b8a5-59e3c33d7590
+		summarizeBy: none
+		sourceColumn: anio
+
+	column total_facturas
+		dataType: int64
+		lineageTag: 12a3f244-9171-43d3-97b0-93121ee3e6bf
+		summarizeBy: sum
+		sourceColumn: total_facturas
+
+	column total_venta_bruta
+		dataType: double
+		lineageTag: 93e6e0d4-152d-4446-a04a-72454416c302
+		summarizeBy: sum
+		sourceColumn: total_venta_bruta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_venta_neta
+		dataType: double
+		lineageTag: 2cbc49d7-3fcd-4c5e-9066-4afdd6cd7a8f
+		summarizeBy: sum
+		sourceColumn: total_venta_neta
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column total_impuesto
+		dataType: double
+		lineageTag: 2ee7007b-1a2e-4f6a-8b88-6497ed6ed7c2
+		summarizeBy: sum
+		sourceColumn: total_impuesto
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition vw_rfv02_ventas_geograficas = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\vw_rfv02_ventas_geograficas.parquet"))
+				in
+					Source
+

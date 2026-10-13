@@ -1,0 +1,60 @@
+table dim_producto
+	lineageTag: 44444444-4444-4444-4444-444444444444
+
+	column producto_pk
+		dataType: int64
+		lineageTag: 9babce21-a909-4bef-b439-9e0872ed9818
+		summarizeBy: none
+		sourceColumn: producto_pk
+
+	column nombre_producto
+		dataType: string
+		lineageTag: e995e3f7-9158-42ef-97ac-c745dfaac6b6
+		summarizeBy: none
+		sourceColumn: nombre_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column fabricante
+		dataType: string
+		lineageTag: 97ab2f68-f94c-4460-a31a-0afe87f70fd9
+		summarizeBy: none
+		sourceColumn: fabricante
+
+		annotation SummarizationSetBy = Automatic
+
+	column marca
+		dataType: string
+		lineageTag: 246eaf65-9bb1-4ef3-8214-7c5ba72735ed
+		summarizeBy: none
+		sourceColumn: marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column tipo_producto
+		dataType: string
+		lineageTag: 143230c3-7988-4076-83f1-fc641016d363
+		summarizeBy: none
+		sourceColumn: tipo_producto
+
+		annotation SummarizationSetBy = Automatic
+
+	column dwh_created_date
+		dataType: dateTime
+		lineageTag: c38e2926-3fd2-41ee-86ec-7a9fa9eec2aa
+		summarizeBy: none
+		sourceColumn: dwh_created_date
+
+		variation Variación
+			isDefault
+			relationship: 2476c123-4ede-42e7-af33-7a3801077400
+			defaultHierarchy: LocalDateTable_ac71fc2b-1b9b-48c4-b11b-3707a5fe412c.'Jerarquía de fechas'
+
+	partition dim_producto = m
+		mode: import
+		source =
+				let
+					Source = Parquet.Document(File.Contents("C:\Users\andre\Documents\github\sql-datawarehouse-project\data\parquet\dim_producto.parquet"))
+				in
+					Source
+
