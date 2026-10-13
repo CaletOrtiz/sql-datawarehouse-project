@@ -599,13 +599,13 @@ model InformeVentas
 					Source
 
 	relationship RelFechaVenta
-		fromColumn: factura[fecha_venta]
-		toColumn: dim_tiempo[tiempo_pk]
+		fromColumn: factura.fecha_venta
+		toColumn: dim_tiempo.tiempo_pk
 
 	relationship RelCliente
-		fromColumn: factura[cliente_fk]
-		toColumn: dim_cliente[cliente_pk]
+		fromColumn: factura.cliente_fk
+		toColumn: dim_cliente.cliente_pk
 
 	relationship RelProducto
-		fromColumn: factura[producto_fk]
-		toColumn: dim_producto[producto_pk]
+		fromColumn: factura.producto_fk
+		toColumn: dim_producto.producto_pk
