@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "9b059f48d4474fb195dd",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1014,
+    "width": 300,
+    "height": 160,
+    "tabOrder": 1014
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "v",
+                  "Entity": "vw_rfv04_ventas_retrasadas"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.Pct Lineas Retrasadas",
+                  "Measure": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "Pct Lineas Retrasadas"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'% lineas retrasadas'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

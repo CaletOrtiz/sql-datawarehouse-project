@@ -1,0 +1,77 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "452f0681e5bf4e48ab6f",
+  "position": {
+    "x": 720,
+    "y": 180,
+    "z": 1005,
+    "width": 560,
+    "height": 360,
+    "tabOrder": 1005
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "c",
+                  "Entity": "dim_cliente"
+                },
+                {
+                  "Name": "f",
+                  "Entity": "factura"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "dim_cliente.segmento_mercado",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "c"
+                      }
+                    },
+                    "Property": "segmento_mercado"
+                  }
+                },
+                {
+                  "Name": "factura.Venta Neta",
+                  "Measure": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "f"
+                      }
+                    },
+                    "Property": "Venta Neta"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Venta neta por segmento'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

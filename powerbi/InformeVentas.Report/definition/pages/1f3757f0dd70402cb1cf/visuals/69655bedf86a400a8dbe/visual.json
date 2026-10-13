@@ -1,0 +1,143 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "69655bedf86a400a8dbe",
+  "position": {
+    "x": 640,
+    "y": 180,
+    "z": 1018,
+    "width": 640,
+    "height": 360,
+    "tabOrder": 1018
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "v",
+                  "Entity": "vw_rfv04_ventas_retrasadas"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.anio",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "anio"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.mes_nombre",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "mes_nombre"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.nombre_cliente",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "nombre_cliente"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.nombre_producto",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "nombre_producto"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.numero_orden",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "numero_orden"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.dias_de_retraso",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "dias_de_retraso"
+                  }
+                },
+                {
+                  "Name": "vw_rfv04_ventas_retrasadas.venta_neta_afectada",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "venta_neta_afectada"
+                  }
+                }
+              ],
+              "OrderBy": [
+                {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "v"
+                        }
+                      },
+                      "Property": "dias_de_retraso"
+                    }
+                  },
+                  "Direction": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Detalle de retrasos'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

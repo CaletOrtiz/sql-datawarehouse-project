@@ -1,0 +1,143 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "a2f9631c3a644ac68380",
+  "position": {
+    "x": 640,
+    "y": 0,
+    "z": 1012,
+    "width": 640,
+    "height": 400,
+    "tabOrder": 1012
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "v",
+                  "Entity": "vw_rfv06_ventas_marca_tipo"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.fabricante",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "fabricante"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.marca",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "marca"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.tipo_producto",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "tipo_producto"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.anio",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "anio"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.unidades_vendidas",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "unidades_vendidas"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.total_venta_bruta",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "total_venta_bruta"
+                  }
+                },
+                {
+                  "Name": "vw_rfv06_ventas_marca_tipo.total_venta_neta",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "total_venta_neta"
+                  }
+                }
+              ],
+              "OrderBy": [
+                {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "v"
+                        }
+                      },
+                      "Property": "total_venta_neta"
+                    }
+                  },
+                  "Direction": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Ventas por marca y tipo'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

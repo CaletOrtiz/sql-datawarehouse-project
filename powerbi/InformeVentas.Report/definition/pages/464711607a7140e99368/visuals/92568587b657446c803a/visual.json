@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "92568587b657446c803a",
+  "position": {
+    "x": 0,
+    "y": 420,
+    "z": 1013,
+    "width": 300,
+    "height": 120,
+    "tabOrder": 1013
+  },
+  "visual": {
+    "visualType": "slicer",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "t",
+                  "Entity": "dim_tiempo"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "dim_tiempo.anio",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "t"
+                      }
+                    },
+                    "Property": "anio"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Anio'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
