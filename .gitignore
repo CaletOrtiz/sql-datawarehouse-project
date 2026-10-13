@@ -2,3 +2,7 @@
 *.parquet
 *.duckdb
 *.duckdb.wal
+# Power BI Desktop local files (regenerables, específicos de cada máquina)
+*.abf
+.pbi/
+powerbi/InformeVentas.Report/.pbi/
