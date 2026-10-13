@@ -105,5 +105,5 @@ CREATE TABLE IF NOT EXISTS bronce.tbl_lineitem(
     l_comment VARCHAR(44)
 );
 
-
+SELECT count(*) AS total_registros FROM bronce.tbl_region;
 

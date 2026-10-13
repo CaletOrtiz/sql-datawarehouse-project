@@ -26,7 +26,7 @@ SELECT
     strftime(fecha_completa, '%B') AS mes_nombre,
     strftime(fecha_completa, '%A') AS dia_semana,
     CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS SMALLINT) AS trimestre,
-    'T' || CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS VARCHAR) AS trimestre_nombre,
+    'Trimestre' || CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS VARCHAR) AS trimestre_nombre,
     CURRENT_TIMESTAMP AS dwh_created_date
 FROM calendario;
 
