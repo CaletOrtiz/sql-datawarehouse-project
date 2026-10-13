@@ -1,0 +1,14 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "8cc6392d1cf84bbd880f",
+  "displayName": "Prueba",
+  "displayOption": "FitToPage",
+  "width": 1280,
+  "height": 720,
+  "visuals": [
+    {
+      "name": "089d82e72f8d488582f1",
+      "path": "visuals/089d82e72f8d488582f1/visual.json"
+    }
+  ]
+}
