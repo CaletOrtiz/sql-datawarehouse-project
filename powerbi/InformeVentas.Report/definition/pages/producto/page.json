@@ -1,0 +1,22 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/v1.0.0/schema.json",
+  "name": "producto",
+  "displayName": "Producto",
+  "displayOption": "FitToPage",
+  "width": 1280,
+  "height": 720,
+  "visuals": [
+    {
+      "name": "productov000000-0000-0000-0000-00000",
+      "path": "visuals/productov000000-0000-0000-0000-00000/visual.json"
+    },
+    {
+      "name": "productov010000-0000-0000-0000-00000",
+      "path": "visuals/productov010000-0000-0000-0000-00000/visual.json"
+    },
+    {
+      "name": "productov020000-0000-0000-0000-00000",
+      "path": "visuals/productov020000-0000-0000-0000-00000/visual.json"
+    }
+  ]
+}

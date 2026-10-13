@@ -1,0 +1,56 @@
+// =============================================================================
+// KPI - Power BI | Proyecto sql-datawarehouse-project (capa ORO)
+// Tablas esperadas al importar los parquet: factura, dim_tiempo, dim_cliente,
+// dim_producto, vw_rfv01..vw_rfv07. Pegar en Modelado > Nueva medida.
+// =============================================================================
+
+// ---------- BASE (tabla factura) ----------
+Venta Neta = SUM ( factura[venta_neta] )
+
+Venta Bruta = SUM ( factura[precio_bruto] )
+
+Monto Impuesto = SUM ( factura[monto_impuesto] )
+
+Monto Descuento =
+SUMX ( factura, factura[precio_bruto] * factura[porcentaje_descuento] )
+
+Unidades Vendidas = SUM ( factura[cantidad_de_producto] )
+
+Nro Lineas = COUNTROWS ( factura )
+
+Nro Ordenes = DISTINCTCOUNT ( factura[numero_orden] )
+
+Ticket Medio = DIVIDE ( [Venta Neta], [Nro Lineas] )
+
+Pct Descuento Efectivo = DIVIDE ( [Monto Descuento], [Venta Bruta] )
+
+// ---------- TIEMPO (requiere dim_tiempo[fecha_completa] como fecha) ----------
+Venta Neta YTD = TOTALYTD ( [Venta Neta], dim_tiempo[fecha_completa] )
+
+Venta Neta Año Anterior =
+CALCULATE ( [Venta Neta], SAMEPERIODLASTYEAR ( dim_tiempo[fecha_completa] ) )
+
+Var Neta YoY = [Venta Neta] - [Venta Neta Año Anterior]
+
+Var Neta YoY % = DIVIDE ( [Var Neta YoY], [Venta Neta Año Anterior] )
+
+// ---------- RETRASOS (RF-V04, tabla vw_rfv04_ventas_retrasadas) ----------
+Lineas Retrasadas = COUNTROWS ( vw_rfv04_ventas_retrasadas )
+
+Venta Afectada Retrasos = SUM ( vw_rfv04_ventas_retrasadas[venta_neta_afectada] )
+
+Pct Lineas Retrasadas = DIVIDE ( [Lineas Retrasadas], [Nro Lineas] )
+
+Dias Retraso Promedio = AVERAGE ( vw_rfv04_ventas_retrasadas[dias_de_retraso] )
+
+// ---------- CLIENTES (RF-V01, tabla vw_rfv01_ventas_cliente) ----------
+Venta Top 10 Clientes =
+CALCULATE (
+    [Venta Neta],
+    TOPN ( 10, VALUES ( dim_cliente[nombre_cliente] ), [Venta Neta] )
+)
+
+Pct Concentracion Top 10 = DIVIDE ( [Venta Top 10 Clientes], [Venta Neta] )
+
+// ---------- PROVEEDORES (RF-V03, tabla vw_rfv03_ventas_proveedor) ----------
+Venta Neta Proveedores = SUM ( vw_rfv03_ventas_proveedor[total_venta_neta] )

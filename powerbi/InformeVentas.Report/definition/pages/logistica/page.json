@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/v1.0.0/schema.json",
+  "name": "logistica",
+  "displayName": "Logística y retrasos",
+  "displayOption": "FitToPage",
+  "width": 1280,
+  "height": 720,
+  "visuals": [
+    {
+      "name": "logisticav000000-0000-0000-0000-0000",
+      "path": "visuals/logisticav000000-0000-0000-0000-0000/visual.json"
+    },
+    {
+      "name": "logisticav010000-0000-0000-0000-0000",
+      "path": "visuals/logisticav010000-0000-0000-0000-0000/visual.json"
+    },
+    {
+      "name": "logisticav020000-0000-0000-0000-0000",
+      "path": "visuals/logisticav020000-0000-0000-0000-0000/visual.json"
+    },
+    {
+      "name": "logisticav030000-0000-0000-0000-0000",
+      "path": "visuals/logisticav030000-0000-0000-0000-0000/visual.json"
+    },
+    {
+      "name": "logisticav040000-0000-0000-0000-0000",
+      "path": "visuals/logisticav040000-0000-0000-0000-0000/visual.json"
+    }
+  ]
+}

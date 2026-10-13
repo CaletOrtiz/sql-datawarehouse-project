@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visual/v1.0.0/schema.json",
+  "name": "clientesv010000-0000-0000-0000-00000",
+  "position": {
+    "x": 320,
+    "y": 0,
+    "z": 1007,
+    "width": 300,
+    "height": 160,
+    "tabOrder": 1007
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "c",
+                  "Entity": "dim_cliente"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "dim_cliente.Pct Concentracion Top 10",
+                  "Measure": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "c"
+                      }
+                    },
+                    "Property": "Pct Concentracion Top 10"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Concentración top 10'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

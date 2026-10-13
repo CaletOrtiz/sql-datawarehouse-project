@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "artifacts": [
+    {
+      "report": {
+        "path": "InformeVentas.Report"
+      }
+    },
+    {
+      "dataset": {
+        "path": "InformeVentas.SemanticModel"
+      }
+    }
+  ],
+  "settings": {
+    "autoRecover": {
+      "enabled": true
+    }
+  }
+}
