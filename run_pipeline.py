@@ -9,6 +9,19 @@ import duckdb
 ROOT = Path(__file__).resolve().parent
 BRONZE_LINEITEM_COUNT = "bronze lineitem"
 GOLD_FACT_COUNT = "gold facts"
+PARQUET_EXPORTS = (
+    ("factura", "oro.factura"),
+    ("dim_tiempo", "oro.dim_tiempo"),
+    ("dim_cliente", "oro.dim_cliente"),
+    ("dim_producto", "oro.dim_producto"),
+    ("vw_rfv01_ventas_cliente", "oro.vw_rfv01_ventas_cliente"),
+    ("vw_rfv02_ventas_geograficas", "oro.vw_rfv02_ventas_geograficas"),
+    ("vw_rfv03_ventas_proveedor", "oro.vw_rfv03_ventas_proveedor"),
+    ("vw_rfv04_ventas_retrasadas", "oro.vw_rfv04_ventas_retrasadas"),
+    ("vw_rfv05_ventas_segmento", "oro.vw_rfv05_ventas_segmento"),
+    ("vw_rfv06_ventas_marca_tipo", "oro.vw_rfv06_ventas_marca_tipo"),
+    ("vw_rfv07_descuentos_ventas", "oro.vw_rfv07_descuentos_ventas"),
+)
 SCRIPTS = (
     "scripts/init_schemas.sql",
     "scripts/bronce/ddl_bronze.sql",
@@ -26,6 +39,37 @@ def execute_script(connection: duckdb.DuckDBPyConnection, relative_path: str) ->
     script_path = ROOT / relative_path
     print(f">>> {relative_path}", flush=True)
     connection.execute(script_path.read_text(encoding="utf-8"))
+
+
+def export_parquet(
+    connection: duckdb.DuckDBPyConnection, output_dir: Path
+) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for file_name, relation in PARQUET_EXPORTS:
+        output_path = (output_dir / f"{file_name}.parquet").resolve()
+        sql_path = str(output_path).replace("'", "''")
+        row_count = connection.execute(
+            f"SELECT COUNT(*) FROM {relation}"
+        ).fetchone()[0]
+        connection.execute(
+            f"COPY (SELECT * FROM {relation}) TO '{sql_path}' "
+            "(FORMAT PARQUET, COMPRESSION SNAPPY, OVERWRITE_OR_IGNORE TRUE)"
+        )
+        exported_rows = connection.execute(
+            "SELECT COALESCE(SUM(num_rows), 0) FROM parquet_file_metadata(?)",
+            [str(output_path)],
+        ).fetchone()[0]
+        if exported_rows != row_count:
+            raise RuntimeError(
+                f"Exportación Parquet incompleta para {file_name}: "
+                f"se esperaban {row_count} filas y se exportaron {exported_rows}."
+            )
+        print(
+            f"Parquet {output_path.name}: {exported_rows} filas "
+            f"({output_path.stat().st_size:,} bytes)",
+            flush=True,
+        )
 
 
 def validate_warehouse(connection: duckdb.DuckDBPyConnection) -> None:
@@ -126,6 +170,9 @@ def main() -> None:
     if not database_path.is_absolute():
         database_path = ROOT / database_path
     database_path.parent.mkdir(parents=True, exist_ok=True)
+    parquet_dir = Path(os.environ.get("PARQUET_OUTPUT_DIR", "data/parquet"))
+    if not parquet_dir.is_absolute():
+        parquet_dir = ROOT / parquet_dir
 
     scale_factor = os.environ.get("TPCH_SCALE_FACTOR", "0.01")
     print(f"Generando TPC-H con factor de escala {scale_factor}.", flush=True)
@@ -136,6 +183,7 @@ def main() -> None:
         for script in SCRIPTS:
             execute_script(connection, script)
         validate_warehouse(connection)
+        export_parquet(connection, parquet_dir)
     finally:
         connection.close()
 

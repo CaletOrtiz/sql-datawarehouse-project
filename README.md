@@ -79,10 +79,28 @@ docker run --rm \
 
 > [!NOTE]
 > El workflow de GitHub Actions repite este proceso en cada push, pull request
-> o ejecución manual. Al terminar correctamente, descarga `data/dwh.duckdb`
-> desde la sección **Actions → Build data warehouse → Artifacts**. El artefacto
-> se conserva durante 14 días. En CI se usa un factor de escala 0.01 para
-> mantener una ejecución ligera; se puede cambiar en `.github/workflows/data-warehouse.yml`.
+> o ejecución manual. Al terminar correctamente, descarga el artefacto
+> `powerbi-parquet-...` desde **Actions → Build data warehouse → Artifacts**,
+> descomprímelo y carga los archivos `.parquet` en Power BI. Se incluyen las
+> cuatro tablas de Oro (`factura`, `dim_tiempo`, `dim_cliente`, `dim_producto`)
+> y siete vistas analíticas `vw_rfv...`. El artefacto se conserva durante 14 días.
+> En CI se usa un factor de escala 0.01 para mantener una ejecución ligera; se
+> puede cambiar en `.github/workflows/data-warehouse.yml`.
+
+### Cargar el modelo en Power BI
+
+1. Descarga y descomprime el artefacto Parquet de la ejecución exitosa de Actions.
+2. En Power BI Desktop, elige **Obtener datos → Parquet** e importa `factura.parquet`,
+   `dim_tiempo.parquet`, `dim_cliente.parquet` y `dim_producto.parquet`.
+3. En la vista **Modelo**, crea estas relaciones uno-a-varios desde la dimensión:
+   - `dim_tiempo[tiempo_pk]` → `factura[fecha_venta]`
+   - `dim_cliente[cliente_pk]` → `factura[cliente_fk]`
+   - `dim_producto[producto_pk]` → `factura[producto_fk]`
+4. Importa las vistas `vw_rfv...parquet` solo si necesitas sus resultados
+   analíticos ya agregados; no las relaciones con las tablas del modelo.
+
+El workflow genera los Parquet con compresión Snappy y valida que las filas
+exportadas coincidan con las tablas y vistas de Oro antes de publicar el artefacto.
 
 <br>
 

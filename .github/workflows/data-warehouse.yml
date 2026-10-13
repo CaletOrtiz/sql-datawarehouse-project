@@ -29,10 +29,10 @@ jobs:
             --volume "$GITHUB_WORKSPACE/sources/tbl:/app/sources/tbl" \
             sql-datawarehouse:ci
 
-      - name: Upload DuckDB artifact
+      - name: Upload Power BI Parquet files
         uses: actions/upload-artifact@v4
         with:
-          name: data-warehouse-${{ github.run_id }}-${{ github.run_attempt }}
-          path: data/dwh.duckdb
+          name: powerbi-parquet-${{ github.run_id }}-${{ github.run_attempt }}
+          path: data/parquet/*.parquet
           if-no-files-found: error
           retention-days: 14
