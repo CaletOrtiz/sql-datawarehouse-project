@@ -1,0 +1,62 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "cd4df68886b7455c973d",
+  "position": {
+    "x": 320,
+    "y": 560,
+    "z": 1005,
+    "width": 300,
+    "height": 160,
+    "tabOrder": 1005
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "c",
+                  "Entity": "dim_cliente"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "dim_cliente.Pct Concentracion Top 10",
+                  "Measure": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "c"
+                      }
+                    },
+                    "Property": "Pct Concentracion Top 10"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Concentracion top 10'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "a4206b93609947899848",
+  "position": {
+    "x": 720,
+    "y": 180,
+    "z": 1007,
+    "width": 560,
+    "height": 360,
+    "tabOrder": 1007
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Version": 0,
+        "Queries": [
+          {
+            "Name": "Main",
+            "Query": {
+              "Version": 2,
+              "From": [
+                {
+                  "Name": "v",
+                  "Entity": "vw_rfv05_ventas_segmento"
+                }
+              ],
+              "Select": [
+                {
+                  "Name": "vw_rfv05_ventas_segmento.segmento_mercado",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "segmento_mercado"
+                  }
+                },
+                {
+                  "Name": "vw_rfv05_ventas_segmento.anio",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "anio"
+                  }
+                },
+                {
+                  "Name": "vw_rfv05_ventas_segmento.total_pedidos",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "total_pedidos"
+                  }
+                },
+                {
+                  "Name": "vw_rfv05_ventas_segmento.venta_neta_total",
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "v"
+                      }
+                    },
+                    "Property": "venta_neta_total"
+                  }
+                }
+              ],
+              "OrderBy": [
+                {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "v"
+                        }
+                      },
+                      "Property": "venta_neta_total"
+                    }
+                  },
+                  "Direction": 1
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Venta por segmento y anio'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
