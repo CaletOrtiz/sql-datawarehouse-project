@@ -154,7 +154,7 @@ model InformeVentas
 		column mes_nombre
 			dataType: string
 			sourceColumn: mes_nombre
-			sort by column: mes
+			sortByColumn: mes
 
 		column dia_semana
 			dataType: string
@@ -168,7 +168,7 @@ model InformeVentas
 		column trimestre_nombre
 			dataType: string
 			sourceColumn: trimestre_nombre
-			sort by column: trimestre
+			sortByColumn: trimestre
 
 		column dwh_created_date
 			dataType: dateTime
