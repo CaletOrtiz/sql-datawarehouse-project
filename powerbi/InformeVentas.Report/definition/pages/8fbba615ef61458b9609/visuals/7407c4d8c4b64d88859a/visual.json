@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "7407c4d8c4b64d88859a",
+  "position": {
+    "x": 320,
+    "y": 560,
+    "z": 1005,
+    "height": 160,
+    "width": 300,
+    "tabOrder": 1005
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_cliente"
+                    }
+                  },
+                  "Property": "Pct Concentracion Top 10"
+                }
+              },
+              "queryRef": "dim_cliente.Pct Concentracion Top 10",
+              "nativeQueryRef": "Pct Concentracion Top 10"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

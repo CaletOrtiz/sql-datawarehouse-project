@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "4a5386a7696f46ffaf5b",
+  "position": {
+    "x": 640,
+    "y": 0,
+    "z": 1024,
+    "height": 160,
+    "width": 300,
+    "tabOrder": 1024
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "Dias Retraso Promedio"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.Dias Retraso Promedio",
+              "nativeQueryRef": "Dias Retraso Promedio"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

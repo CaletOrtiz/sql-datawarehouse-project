@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "5da64c6ac45e48c7b43c",
+  "position": {
+    "x": 0,
+    "y": 180,
+    "z": 1025,
+    "height": 360,
+    "width": 620,
+    "tabOrder": 1025
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.anio",
+              "nativeQueryRef": "anio"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "Lineas Retrasadas"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.Lineas Retrasadas",
+              "nativeQueryRef": "Lineas Retrasadas"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

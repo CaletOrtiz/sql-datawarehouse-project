@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "2126ff8cb5b143b2849a",
+  "position": {
+    "x": 640,
+    "y": 180,
+    "z": 1017,
+    "height": 380,
+    "width": 640,
+    "tabOrder": 1017
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "nombre_cliente"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.nombre_cliente",
+              "nativeQueryRef": "nombre_cliente"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "segmento_mercado"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.segmento_mercado",
+              "nativeQueryRef": "segmento_mercado"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "pais_nombre"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.pais_nombre",
+              "nativeQueryRef": "pais_nombre"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "total_pedidos"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.total_pedidos",
+              "nativeQueryRef": "total_pedidos"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "total_venta_neta"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.total_venta_neta",
+              "nativeQueryRef": "total_venta_neta"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "total_unidades"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.total_unidades",
+              "nativeQueryRef": "total_unidades"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv01_ventas_cliente"
+                    }
+                  },
+                  "Property": "ticket_medio"
+                }
+              },
+              "queryRef": "vw_rfv01_ventas_cliente.ticket_medio",
+              "nativeQueryRef": "ticket_medio"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

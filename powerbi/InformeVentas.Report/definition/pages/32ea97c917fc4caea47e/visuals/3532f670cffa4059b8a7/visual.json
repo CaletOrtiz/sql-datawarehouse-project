@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "3532f670cffa4059b8a7",
+  "position": {
+    "x": 720,
+    "y": 180,
+    "z": 1013,
+    "height": 360,
+    "width": 560,
+    "tabOrder": 1013
+  },
+  "visual": {
+    "visualType": "clusteredColumnChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_cliente"
+                    }
+                  },
+                  "Property": "segmento_mercado"
+                }
+              },
+              "queryRef": "dim_cliente.segmento_mercado",
+              "nativeQueryRef": "segmento_mercado"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Venta Neta"
+                }
+              },
+              "queryRef": "factura.Venta Neta",
+              "nativeQueryRef": "Venta Neta"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

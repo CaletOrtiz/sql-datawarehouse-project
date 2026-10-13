@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "f6e2ca77cd014f7db95c",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1014,
+    "height": 160,
+    "width": 300,
+    "tabOrder": 1014
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Nro Ordenes"
+                }
+              },
+              "queryRef": "factura.Nro Ordenes",
+              "nativeQueryRef": "Nro Ordenes"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

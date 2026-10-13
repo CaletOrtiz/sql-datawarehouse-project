@@ -1,0 +1,122 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "03bdcdb4336f477cae47",
+  "position": {
+    "x": 640,
+    "y": 180,
+    "z": 1026,
+    "height": 360,
+    "width": 640,
+    "tabOrder": 1026
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.anio",
+              "nativeQueryRef": "anio"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "mes_nombre"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.mes_nombre",
+              "nativeQueryRef": "mes_nombre"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "nombre_cliente"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.nombre_cliente",
+              "nativeQueryRef": "nombre_cliente"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "nombre_producto"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.nombre_producto",
+              "nativeQueryRef": "nombre_producto"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "numero_orden"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.numero_orden",
+              "nativeQueryRef": "numero_orden"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "dias_de_retraso"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.dias_de_retraso",
+              "nativeQueryRef": "dias_de_retraso"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "vw_rfv04_ventas_retrasadas"
+                    }
+                  },
+                  "Property": "venta_neta_afectada"
+                }
+              },
+              "queryRef": "vw_rfv04_ventas_retrasadas.venta_neta_afectada",
+              "nativeQueryRef": "venta_neta_afectada"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
