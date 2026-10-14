@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Página-1" id="qW6h5nT9PrEW3ZWFQX8k">
-    <mxGraphModel dx="838" dy="1700" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="655" dy="1619" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -41,10 +41,10 @@
           <mxGeometry height="371.31" width="170" x="320" y="188.69" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-14" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FAD7AC,#999999);strokeColor=light-dark(#B46504,#B3B3B3);" value="plata" vertex="1">
-          <mxGeometry height="21.31" width="170" x="650" y="160" as="geometry" />
+          <mxGeometry height="21.31" width="170" x="696.97" y="160" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=light-dark(#B46504,#B3B3B3);" value="" vertex="1">
-          <mxGeometry height="371.31" width="170" x="650" y="188.69" as="geometry" />
+          <mxGeometry height="371.31" width="170" x="696.97" y="188.69" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-16" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=light-dark(#FAD7AC,#CCCC00);strokeColor=light-dark(#B46504,#FFFF33);" value="oro" vertex="1">
           <mxGeometry height="21.31" width="170" x="1050" y="162.5" as="geometry" />
@@ -59,7 +59,7 @@
           <mxGeometry height="60" width="45" x="1112.5" y="202.5" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-31" parent="1" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=light-dark(#FFFFFF,#808080);" value="" vertex="1">
-          <mxGeometry height="60" width="45" x="713.95" y="200" as="geometry" />
+          <mxGeometry height="60" width="45" x="760.9200000000001" y="200" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-36" parent="1" style="line;strokeWidth=1;rotatable=0;dashed=0;labelPosition=right;align=left;verticalAlign=middle;spacingTop=0;spacingLeft=6;points=[];portConstraint=eastwest;" value="" vertex="1">
           <mxGeometry height="10" width="140" x="335" y="319" as="geometry" />
@@ -68,13 +68,13 @@
           <mxGeometry height="10" width="140" x="1065" y="321.5" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-38" parent="1" style="line;strokeWidth=1;rotatable=0;dashed=0;labelPosition=right;align=left;verticalAlign=middle;spacingTop=0;spacingLeft=6;points=[];portConstraint=eastwest;" value="" vertex="1">
-          <mxGeometry height="10" width="140" x="666.45" y="319" as="geometry" />
+          <mxGeometry height="10" width="140" x="713.4200000000001" y="319" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-40" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;i&gt;Datos Brutos&lt;/i&gt;" vertex="1">
           <mxGeometry height="30" width="74" x="368" y="274.35" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-41" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;i&gt;Datos limpios&lt;/i&gt;" vertex="1">
-          <mxGeometry height="21.31" width="57.22" x="696.17" y="274.35" as="geometry" />
+          <mxGeometry height="21.31" width="57.22" x="743.14" y="274.35" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-42" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="&lt;i&gt;Datos Listos para el negocio&lt;/i&gt;" vertex="1">
           <mxGeometry height="30" width="98.28" x="1085.8600000000001" y="277" as="geometry" />
@@ -95,10 +95,10 @@
           <mxGeometry height="84.68" width="110" x="583.45" y="617.66" as="geometry" />
         </mxCell>
         <mxCell id="7h-Ckt93WjeL3GpCfprF-51" parent="1" style="whiteSpace=wrap;html=1;" value="DATA WARE HOUSE ARQUITECTURE" vertex="1">
-          <mxGeometry height="60" width="1235" x="110" y="-350" as="geometry" />
+          <mxGeometry height="60" width="1830" x="110" y="-350" as="geometry" />
         </mxCell>
         <mxCell id="0vpAG-yfr6doGM7V7ApB-1" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=11;" value="&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b&gt;Object type: &lt;/b&gt;tablas&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;br&gt;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Carga:&amp;nbsp;&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Batch processing&lt;/span&gt;&lt;/li&gt;&lt;li&gt;carga completa&lt;/li&gt;&lt;li&gt;Insert (INSERT)&lt;/li&gt;&lt;/ul&gt;&lt;b&gt;Transformation:&lt;/b&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;ul&gt;&lt;li&gt;&lt;b&gt;limpiezza&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;estandarizacion&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;normalizacion&lt;/b&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;enrquecimiento&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;br&gt;&lt;/div&gt;&lt;div style=&quot;text-align: start;&quot;&gt;&lt;b&gt;Data model: &lt;/b&gt;&amp;nbsp;Normalizado&lt;/div&gt;" vertex="1">
-          <mxGeometry height="175.65" width="140" x="668.45" y="349.35" as="geometry" />
+          <mxGeometry height="175.65" width="140" x="715.4200000000001" y="349.35" as="geometry" />
         </mxCell>
         <mxCell id="0vpAG-yfr6doGM7V7ApB-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=none;fontSize=24;fillColor=default;" value="Consume" vertex="1">
           <mxGeometry height="30" width="110" x="1620" y="120" as="geometry" />

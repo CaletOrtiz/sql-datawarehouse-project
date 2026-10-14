@@ -1,33 +1,32 @@
 /*
 ==============================================
-ETL PLATA -> ORO (STAR SCHEMA FACTURA)
+ETL PLATA -> ORO (STAR SCHEMA FACTURA) · v2 (sin proveedor)
 ==============================================
 Extrae de capa plata, transforma a dimensiones y hechos,
 y carga el esquema estrella de la capa oro.
+Ejecutar siempre despues de ddl_oro_v2.sql (las cargas son INSERT, no idempotentes).
 Al final verifica la carga.
 */
 
 -- DIM_TIEMPO: calendario del periodo de análisis 1992-1997
-CREATE OR REPLACE TABLE oro.dim_tiempo AS
+-- INSERT para conservar la PK y los tipos definidos en el DDL.
+INSERT INTO oro.dim_tiempo (tiempo_pk, anio, mes, dia, fecha_completa, mes_nombre,
+                            dia_semana, trimestre, trimestre_nombre)
 WITH calendario AS (
     SELECT CAST(d AS DATE) AS fecha_completa
-    FROM generate_series(
-        DATE '1992-01-01',
-        DATE '1997-12-31',
-        INTERVAL 1 DAY
-    ) AS t(d)
+    FROM generate_series(DATE '1992-01-01', DATE '1997-12-31', INTERVAL 1 DAY) AS t(d)
 )
 SELECT
-    CAST(strftime(fecha_completa, '%Y%m%d') AS BIGINT) AS tiempo_pk,
-    CAST(strftime(fecha_completa, '%Y') AS SMALLINT) AS anio,
-    CAST(strftime(fecha_completa, '%m') AS SMALLINT) AS mes,
-    CAST(strftime(fecha_completa, '%d') AS SMALLINT) AS dia,
+    CAST(strftime(fecha_completa, '%Y%m%d') AS BIGINT),
+    CAST(year(fecha_completa)  AS SMALLINT),
+    CAST(month(fecha_completa) AS SMALLINT),
+    CAST(day(fecha_completa)   AS SMALLINT),
     fecha_completa,
-    strftime(fecha_completa, '%B') AS mes_nombre,
-    strftime(fecha_completa, '%A') AS dia_semana,
-    CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS SMALLINT) AS trimestre,
-    'Trimestre' || CAST((CAST(strftime(fecha_completa, '%m') AS INTEGER) - 1) / 3 + 1 AS VARCHAR) AS trimestre_nombre,
-    CURRENT_TIMESTAMP AS dwh_created_date
+    ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto',
+     'Septiembre','Octubre','Noviembre','Diciembre'][month(fecha_completa)],
+    ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'][isodow(fecha_completa)],
+    CAST((month(fecha_completa) - 1) // 3 + 1 AS SMALLINT),
+    'Trimestre ' || CAST((month(fecha_completa) - 1) // 3 + 1 AS VARCHAR)
 FROM calendario;
 
 -- DIM_CLIENTE
@@ -48,14 +47,14 @@ SELECT
     p.p_partkey::BIGINT,
     p.p_name,
     p.p_mfgr,
-    b.b_brandname,
+    COALESCE(b.b_brandname, 'Sin marca'),
     p.p_type
 FROM plata.tbl_part p
 LEFT JOIN plata.tbl_brand b ON p.p_brand = b.b_brandkey;
 
 -- FACTURA (tabla de hechos)
 INSERT INTO oro.factura (
-    factura_pk, numero_orden, numero_linea, proveedor_fk,
+    factura_pk, numero_orden, numero_linea,
     fecha_venta, cliente_fk, producto_fk,
     cantidad_de_producto, precio_bruto, porcentaje_descuento,
     porcentaje_impuesto, venta_neta, monto_impuesto
@@ -66,7 +65,6 @@ SELECT
     )::BIGINT AS factura_pk,
     l.l_orderkey::BIGINT AS numero_orden,
     l.l_linenumber::BIGINT AS numero_linea,
-    l.l_suppkey::BIGINT AS proveedor_fk,
     CAST(strftime(o.o_orderdate, '%Y%m%d') AS BIGINT) AS fecha_venta,
     o.o_custkey::BIGINT AS cliente_fk,
     l.l_partkey::BIGINT AS producto_fk,
@@ -80,6 +78,19 @@ FROM plata.tbl_lineitem l
 JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey
 WHERE o.o_orderdate >= DATE '1992-01-01'
   AND o.o_orderdate < DATE '1998-01-01';
+
+-- VERIFICACION DE CARGA (todas deben cumplirse)
+SELECT
+    (SELECT COUNT(*) FROM oro.dim_tiempo)  AS dias_calendario,           -- 2192
+    (SELECT COUNT(*) FROM oro.factura)     AS lineas_factura,
+    (SELECT COUNT(*) FROM plata.tbl_lineitem l JOIN plata.tbl_orders o ON l.l_orderkey = o.o_orderkey
+      WHERE o.o_orderdate >= DATE '1992-01-01' AND o.o_orderdate < DATE '1998-01-01') AS lineas_esperadas,
+    (SELECT COUNT(*) FROM oro.factura f LEFT JOIN oro.dim_tiempo t ON f.fecha_venta = t.tiempo_pk
+      WHERE t.tiempo_pk IS NULL)           AS huerfanas_tiempo,           -- 0
+    (SELECT COUNT(*) FROM oro.factura f LEFT JOIN oro.dim_cliente c ON f.cliente_fk = c.cliente_pk
+      WHERE c.cliente_pk IS NULL)          AS huerfanas_cliente,          -- 0
+    (SELECT COUNT(*) FROM oro.factura f LEFT JOIN oro.dim_producto p ON f.producto_fk = p.producto_pk
+      WHERE p.producto_pk IS NULL)         AS huerfanas_producto;         -- 0
 
 -- VENTA NETA POR REGION Y NACION DEL CLIENTE
 SELECT

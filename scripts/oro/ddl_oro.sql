@@ -2,8 +2,8 @@
 ==============================================
 GOLD LAYER (ORO) - STAR SCHEMA DDL
 ==============================================
-Esquema en estrella:
-  - factura (tabla de hechos)
+Esquema en estrella (datamart de VENTAS; sin proveedor ni logística):
+  - factura (tabla de hechos, grano: línea de factura)
   - dim_tiempo, dim_cliente, dim_producto
 
 WARNING: Este script elimina las tablas existentes en el esquema oro.
@@ -17,7 +17,6 @@ DROP TABLE IF EXISTS oro.dim_cliente;
 DROP TABLE IF EXISTS oro.dim_customer;
 DROP TABLE IF EXISTS oro.dim_producto;
 DROP TABLE IF EXISTS oro.dim_product;
-DROP TABLE IF EXISTS oro.dim_supplier;
 
 CREATE TABLE IF NOT EXISTS oro.dim_tiempo (
     tiempo_pk        BIGINT PRIMARY KEY,   -- YYYYMMDD
@@ -54,7 +53,6 @@ CREATE TABLE IF NOT EXISTS oro.factura (
     factura_pk            BIGINT PRIMARY KEY,
     numero_orden          BIGINT NOT NULL,
     numero_linea          BIGINT NOT NULL,
-    proveedor_fk          BIGINT NOT NULL,
     fecha_venta           BIGINT,               -- FK a dim_tiempo.tiempo_pk
     cliente_fk            BIGINT,               -- FK a dim_cliente.cliente_pk
     producto_fk           BIGINT,               -- FK a dim_producto.producto_pk
