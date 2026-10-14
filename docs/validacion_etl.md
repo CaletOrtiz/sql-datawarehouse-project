@@ -13,8 +13,8 @@ flowchart LR
     D --> E[plata/ddl_plata.sql]
     E --> F[plata/etl.sql<br/>10 tablas]
     F --> G[oro/ddl_oro.sql]
-    G --> H[oro/etl_oro.sql<br/>5 tablas estrella]
-    H --> I[oro/views.sql<br/>7 vistas]
+    G --> H[oro/etl_oro.sql<br/>4 tablas del esquema estrella]
+    H --> I[oro/views.sql<br/>9 vistas]
     I --> J[(data/dwh.duckdb)]
 ```
 
@@ -63,10 +63,11 @@ FROM oro.factura f
 JOIN oro.dim_producto p ON f.producto_fk = p.producto_pk
 GROUP BY 1 ORDER BY venta_neta DESC;
 
--- 4. Líneas despachadas después de la fecha comprometida
-SELECT numero_orden, fecha_despacho, fecha_comprometida, dias_de_retraso
-FROM oro.vw_rfv04_ventas_retrasadas
-LIMIT 10;
+-- 4. KPIs ejecutivos por año
+SELECT anio, total_facturas, clientes_activos, venta_neta,
+       crecimiento_interanual_pct
+FROM oro.vw_rfv12_kpis_ejecutivo
+ORDER BY anio;
 ```
 
 ## Buenas prácticas de ejecución

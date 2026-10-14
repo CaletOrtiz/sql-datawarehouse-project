@@ -13,7 +13,7 @@ flowchart LR
 
     subgraph E3["ORO: Modelar + Load"]
             C1[etl_oro.sql<br/>dimensiones + hechos] --> C2[oro.*<br/>star schema]
-            C2 --> C3[views.sql<br/>7 vistas de análisis]
+            C2 --> C3[views.sql<br/>9 vistas de análisis]
     end
 
     E1 --> E2 --> E3

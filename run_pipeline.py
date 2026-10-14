@@ -9,19 +9,23 @@ import duckdb
 ROOT = Path(__file__).resolve().parent
 BRONZE_LINEITEM_COUNT = "bronze lineitem"
 GOLD_FACT_COUNT = "gold facts"
+GOLD_VIEWS = (
+    "vw_rfv01_ventas_cliente",
+    "vw_rfv01_top100_clientes",
+    "vw_rfv02_ventas_geograficas",
+    "vw_rfv05_ventas_segmento",
+    "vw_rfv06_ventas_marca_tipo",
+    "vw_rfv07_descuentos_ventas",
+    "vw_rfv08_iva_ventas",
+    "vw_rfv10_estacionalidad",
+    "vw_rfv12_kpis_ejecutivo",
+)
 PARQUET_EXPORTS = (
     ("factura", "oro.factura"),
     ("dim_tiempo", "oro.dim_tiempo"),
     ("dim_cliente", "oro.dim_cliente"),
     ("dim_producto", "oro.dim_producto"),
-    ("vw_rfv01_ventas_cliente", "oro.vw_rfv01_ventas_cliente"),
-    ("vw_rfv02_ventas_geograficas", "oro.vw_rfv02_ventas_geograficas"),
-    ("vw_rfv03_ventas_proveedor", "oro.vw_rfv03_ventas_proveedor"),
-    ("vw_rfv04_ventas_retrasadas", "oro.vw_rfv04_ventas_retrasadas"),
-    ("vw_rfv05_ventas_segmento", "oro.vw_rfv05_ventas_segmento"),
-    ("vw_rfv06_ventas_marca_tipo", "oro.vw_rfv06_ventas_marca_tipo"),
-    ("vw_rfv07_descuentos_ventas", "oro.vw_rfv07_descuentos_ventas"),
-)
+) + tuple((view_name, f"oro.{view_name}") for view_name in GOLD_VIEWS)
 SCRIPTS = (
     "scripts/init_schemas.sql",
     "scripts/bronce/ddl_bronze.sql",
@@ -81,16 +85,24 @@ def validate_warehouse(connection: duckdb.DuckDBPyConnection) -> None:
         "calendar days": "SELECT COUNT(*) FROM oro.dim_tiempo",
         "customer dimension": "SELECT COUNT(*) FROM oro.dim_cliente",
         "product dimension": "SELECT COUNT(*) FROM oro.dim_producto",
-        "gold views": """
-            SELECT COUNT(*)
-            FROM duckdb_views()
-            WHERE schema_name = 'oro' AND view_name LIKE 'vw_rfv%'
-        """,
     }
     counts = {
         label: connection.execute(query).fetchone()[0]
         for label, query in checks.items()
     }
+    view_names = sorted(
+        row[0]
+        for row in connection.execute(
+            """
+            SELECT view_name
+            FROM duckdb_views()
+            WHERE schema_name = 'oro' AND view_name LIKE 'vw_rfv%'
+            """
+        ).fetchall()
+    )
+    expected_views = set(GOLD_VIEWS)
+    actual_views = set(view_names)
+    counts["gold views"] = len(view_names)
 
     if counts[BRONZE_LINEITEM_COUNT] == 0:
         raise RuntimeError("La capa bronce no contiene líneas de venta.")
@@ -104,8 +116,13 @@ def validate_warehouse(connection: duckdb.DuckDBPyConnection) -> None:
             f"El calendario debe tener {expected_calendar_days} días; "
             f"se encontraron {counts['calendar days']}."
         )
-    if counts["gold views"] != 7:
-        raise RuntimeError(f"Se esperaban 7 vistas oro; se encontraron {counts['gold views']}.")
+    if actual_views != expected_views:
+        missing_views = sorted(expected_views - actual_views)
+        unexpected_views = sorted(actual_views - expected_views)
+        raise RuntimeError(
+            "Las vistas oro no coinciden con las esperadas. "
+            f"Faltan: {missing_views}; inesperadas: {unexpected_views}."
+        )
     expected_facts = connection.execute(
         """
         SELECT COUNT(*)
@@ -137,11 +154,6 @@ def validate_warehouse(connection: duckdb.DuckDBPyConnection) -> None:
             LEFT JOIN oro.dim_producto p ON f.producto_fk = p.producto_pk
             WHERE p.producto_pk IS NULL
         """,
-        "proveedor": """
-            SELECT COUNT(*) FROM oro.factura f
-            LEFT JOIN plata.tbl_supplier s ON f.proveedor_fk = s.s_suppkey
-            WHERE s.s_suppkey IS NULL
-        """,
     }
     for dimension, query in orphan_checks.items():
         orphan_count = connection.execute(query).fetchone()[0]
@@ -150,14 +162,7 @@ def validate_warehouse(connection: duckdb.DuckDBPyConnection) -> None:
                 f"Se encontraron {orphan_count} hechos sin dimensión de {dimension}."
             )
 
-    view_names = connection.execute(
-        """
-        SELECT view_name
-        FROM duckdb_views()
-        WHERE schema_name = 'oro' AND view_name LIKE 'vw_rfv%'
-        """
-    ).fetchall()
-    for (view_name,) in view_names:
+    for view_name in view_names:
         connection.execute(f'SELECT * FROM oro."{view_name}" LIMIT 1').fetchall()
 
     print("Validación correcta:")

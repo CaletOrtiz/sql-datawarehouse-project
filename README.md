@@ -83,7 +83,7 @@ docker run --rm \
 > `powerbi-parquet-...` desde **Actions → Build data warehouse → Artifacts**,
 > descomprímelo y carga los archivos `.parquet` en Power BI. Se incluyen las
 > cuatro tablas de Oro (`factura`, `dim_tiempo`, `dim_cliente`, `dim_producto`)
-> y siete vistas analíticas `vw_rfv...`. El artefacto se conserva durante 14 días.
+> y nueve vistas analíticas `vw_rfv...`. El artefacto se conserva durante 14 días.
 > En CI se usa un factor de escala 0.01 para mantener una ejecución ligera; se
 > puede cambiar en `.github/workflows/data-warehouse.yml`.
 
