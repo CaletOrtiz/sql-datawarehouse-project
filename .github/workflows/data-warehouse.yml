@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # Cambiado de 'read' a 'write' para permitir crear Releases
 
 jobs:
   build:
@@ -29,6 +29,7 @@ jobs:
             --volume "$GITHUB_WORKSPACE/sources/tbl:/app/sources/tbl" \
             sql-datawarehouse:ci
 
+      # 1. Conservas el paso de Artefactos existente
       - name: Upload Power BI Parquet files
         uses: actions/upload-artifact@v4
         with:
@@ -36,3 +37,12 @@ jobs:
           path: data/parquet/*.parquet
           if-no-files-found: error
           retention-days: 14
+
+      # 2. Agregas este paso DEBAJO para publicar la URL fija
+      - name: Publicar Parquet en GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: latest
+          files: data/parquet/*.parquet
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
