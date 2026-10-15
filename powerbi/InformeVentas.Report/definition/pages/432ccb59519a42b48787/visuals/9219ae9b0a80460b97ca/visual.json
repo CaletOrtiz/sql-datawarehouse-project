@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "9219ae9b0a80460b97ca",
   "position": {
     "x": 0,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "vw_rfv04_ventas_retrasadas.anio",
-              "nativeQueryRef": "anio"
+              "nativeQueryRef": "anio",
+              "active": true
             }
           ]
         },
@@ -49,6 +50,24 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "vw_rfv04_ventas_retrasadas"
+                  }
+                },
+                "Property": "Lineas Retrasadas"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "visualContainerObjects": {
@@ -74,5 +93,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "639c99be6d2506f8d17a",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "vw_rfv04_ventas_retrasadas"
+              }
+            },
+            "Property": "anio"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "a5e5ddc57e34f3346284",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "vw_rfv04_ventas_retrasadas"
+              }
+            },
+            "Property": "Lineas Retrasadas"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

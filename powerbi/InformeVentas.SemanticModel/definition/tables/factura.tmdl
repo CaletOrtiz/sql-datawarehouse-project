@@ -164,6 +164,24 @@ table factura
 			relationship: a19e39c1-5548-4551-881e-016ae8544c8a
 			defaultHierarchy: LocalDateTable_96f30b33-4b50-4c07-99ea-65f92e424980.'Jerarquía de fechas'
 
+	measure 'Venta Acumulada' = CALCULATE([Venta Neta], FILTER(ALL(dim_tiempo), dim_tiempo[fecha_completa] <= MAX(dim_tiempo[fecha_completa])))
+		formatString: #,0.00
+
+	measure 'Ticket Medio por Orden' = DIVIDE([Venta Neta], DISTINCTCOUNT(factura[numero_orden]))
+		formatString: #,0.00
+
+	measure 'Pct del Total del Periodo' = DIVIDE([Venta Neta], CALCULATE([Venta Neta], ALL(dim_tiempo)))
+		formatString: 0.00%
+
+	measure 'Venta Año Base 1992' = CALCULATE([Venta Neta], dim_tiempo[anio] = 1992)
+		formatString: #,0.00
+
+	measure 'Crecimiento vs 1992 %' = DIVIDE([Venta Neta] - [Venta Año Base 1992], [Venta Año Base 1992])
+		formatString: 0.00%
+
+	measure 'Unidades por Orden' = DIVIDE([Unidades Vendidas], DISTINCTCOUNT(factura[numero_orden]))
+		formatString: #,0.0
+
 	partition factura = m
 		mode: import
 		source =

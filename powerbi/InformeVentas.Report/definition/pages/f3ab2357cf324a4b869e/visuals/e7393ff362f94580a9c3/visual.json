@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "e7393ff362f94580a9c3",
   "position": {
     "x": 0,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "dim_tiempo.anio",
-              "nativeQueryRef": "anio"
+              "nativeQueryRef": "anio",
+              "active": true
             }
           ]
         },

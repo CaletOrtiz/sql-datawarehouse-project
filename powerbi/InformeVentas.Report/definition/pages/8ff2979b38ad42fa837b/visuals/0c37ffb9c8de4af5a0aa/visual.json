@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "0c37ffb9c8de4af5a0aa",
+  "position": {
+    "x": 660,
+    "y": 500,
+    "z": 1007,
+    "height": 220,
+    "width": 620,
+    "tabOrder": 1007
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_tiempo"
+                    }
+                  },
+                  "Property": "anio"
+                }
+              },
+              "queryRef": "dim_tiempo.anio",
+              "nativeQueryRef": "anio"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Venta Neta"
+                }
+              },
+              "queryRef": "factura.Venta Neta",
+              "nativeQueryRef": "Venta Neta"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Var Neta YoY %"
+                }
+              },
+              "queryRef": "factura.Var Neta YoY %",
+              "nativeQueryRef": "Var Neta YoY %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Ticket Medio por Orden"
+                }
+              },
+              "queryRef": "factura.Ticket Medio por Orden",
+              "nativeQueryRef": "Ticket Medio por Orden"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Unidades Vendidas"
+                }
+              },
+              "queryRef": "factura.Unidades Vendidas",
+              "nativeQueryRef": "Unidades Vendidas"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Hitos año a año'"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Left'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

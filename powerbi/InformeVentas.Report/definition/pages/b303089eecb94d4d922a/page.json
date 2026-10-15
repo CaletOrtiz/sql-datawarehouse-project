@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "b303089eecb94d4d922a",
+  "displayName": "Próximo capítulo: Clientes",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}

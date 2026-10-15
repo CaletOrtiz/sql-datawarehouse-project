@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "fc216895658f4c779b76",
   "position": {
     "x": 0,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "dim_producto.marca",
-              "nativeQueryRef": "marca"
+              "nativeQueryRef": "marca",
+              "active": true
             }
           ]
         },

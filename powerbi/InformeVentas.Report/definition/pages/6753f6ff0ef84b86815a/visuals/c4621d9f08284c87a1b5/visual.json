@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "c4621d9f08284c87a1b5",
   "position": {
     "x": 660,
@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "dim_cliente.segmento_mercado",
-              "nativeQueryRef": "segmento_mercado"
+              "nativeQueryRef": "segmento_mercado",
+              "active": true
             }
           ]
         }

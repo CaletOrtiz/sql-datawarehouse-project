@@ -44,10 +44,18 @@ Las vistas `vw_rfv*` se importan como tablas sueltas (sin relación).
 
 ## Páginas sugeridas del informe
 
-1. **Ejecutivo (RF-V17):** KPIs 1–8 + serie anual.
-2. **Clientes y geografía:** KPIs 10–12.
-3. **Producto:** KPI 13 + empaque si se agrega.
-4. **Logística:** KPIs 14–16 + detalle `vw_rfv04`.
+1. **Portada**: puerta de entrada con navegador de páginas + adelanto de la curva.
+2. **Historia 1992-1997**: el relato en 3 capítulos (volumen total → crecimiento vs 1992 → ticket por orden), curva acumulada, YoY, segmentos y tabla de hitos.
+3. **Ejecutivo (RF-V17):** KPIs 1–8 + serie anual.
+4. **Clientes y geografía:** KPIs 10–12.
+5. **Producto:** KPI 13 + empaque si se agrega.
+6. **Logística:** KPIs 14–16 + detalle `vw_rfv04`.
+7. **Próximos capítulos**: plantillas para Clientes y Logística.
+
+## Medidas narrativas (tabla `factura`)
+
+`Venta Acumulada`, `Ticket Medio por Orden`, `Pct del Total del Periodo`,
+`Venta Año Base 1992`, `Crecimiento vs 1992 %`, `Unidades por Orden`.
 
 ## Notas
 
