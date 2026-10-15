@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "80bb447cfc0e4f3e99b3",
+  "position": {
+    "x": 0,
+    "y": 448,
+    "z": 1014,
+    "height": 248,
+    "width": 620,
+    "tabOrder": 1014
+  },
+  "visual": {
+    "visualType": "filledMap",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_cliente"
+                    }
+                  },
+                  "Property": "pais_nombre"
+                }
+              },
+              "queryRef": "dim_cliente.pais_nombre",
+              "nativeQueryRef": "pais_nombre"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Venta Neta"
+                }
+              },
+              "queryRef": "factura.Venta Neta",
+              "nativeQueryRef": "Venta Neta"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

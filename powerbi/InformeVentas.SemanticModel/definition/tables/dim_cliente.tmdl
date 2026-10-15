@@ -33,6 +33,7 @@ table dim_cliente
 
 	column pais_nombre
 		dataType: string
+		dataCategory: Country
 		lineageTag: c7cafc53-4b79-486f-ba0a-e63c764afc14
 		summarizeBy: none
 		sourceColumn: pais_nombre

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b93648c8c8ad4c5c952d",
+  "position": {
+    "x": 966,
+    "y": 56,
+    "z": 1004,
+    "height": 40,
+    "width": 314,
+    "tabOrder": 1004
+  },
+  "visual": {
+    "visualType": "slicer",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "dim_cliente"
+                    }
+                  },
+                  "Property": "segmento_mercado"
+                }
+              },
+              "queryRef": "dim_cliente.segmento_mercado",
+              "nativeQueryRef": "segmento_mercado"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

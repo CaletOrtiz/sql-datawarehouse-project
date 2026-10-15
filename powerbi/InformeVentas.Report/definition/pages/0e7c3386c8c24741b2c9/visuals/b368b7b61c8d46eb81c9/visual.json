@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "b368b7b61c8d46eb81c9",
+  "position": {
+    "x": 1104,
+    "y": 110,
+    "z": 1011,
+    "height": 80,
+    "width": 176,
+    "tabOrder": 1011
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "% Impuesto Efectivo"
+                }
+              },
+              "queryRef": "factura.% Impuesto Efectivo",
+              "nativeQueryRef": "% Impuesto Efectivo"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

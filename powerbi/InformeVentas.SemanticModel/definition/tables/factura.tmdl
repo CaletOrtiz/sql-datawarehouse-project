@@ -182,6 +182,29 @@ table factura
 	measure 'Unidades por Orden' = DIVIDE([Unidades Vendidas], DISTINCTCOUNT(factura[numero_orden]))
 		formatString: #,0.0
 
+	measure 'Facturas' = [Nro Ordenes]
+		formatString: #,0
+
+	measure '% Descuento' = [Pct Descuento Efectivo]
+		formatString: 0.00%
+
+	measure '% Impuesto Efectivo' = DIVIDE([Monto Impuesto], [Venta Neta])
+		formatString: 0.00%
+
+	measure 'Clientes Activos' = DISTINCTCOUNT(factura[cliente_fk])
+		formatString: #,0
+
+	measure 'Media Móvil 3M' = AVERAGEX(DATESINPERIOD(dim_tiempo[fecha_completa], MAX(dim_tiempo[fecha_completa]), -3, MONTH), [Venta Neta])
+		formatString: #,0.00
+
+	measure 'Color Crecimiento' = IF([Var Neta YoY %] >= 0, "#1AAB40", "#D64550")
+
+	measure 'Título Historia' = IF(HASONEVALUE(dim_tiempo[anio]), IF([Var Neta YoY %] < 0, "Contracción (" & FORMAT([Var Neta YoY %], "0.0%") & " vs " & (MAX(dim_tiempo[anio]) - 1) & ")", "Crecimiento (" & FORMAT([Var Neta YoY %], "0.0%") & " vs " & (MAX(dim_tiempo[anio]) - 1) & ")"), "1992–1997: " & FORMAT([Venta Neta] / 1000000, "#,##0.0") & "M en ventas netas")
+
+	measure 'Título Portada' = "Historia de ventas 1992–1997"
+
+	measure 'Subtítulo Portada' = FORMAT([Venta Neta] / 1000000, "#,##0.0") & "M en ventas netas, " & FORMAT(DISTINCTCOUNT(factura[cliente_fk]), "#,##0") & " clientes, " & FORMAT(DISTINCTCOUNT(dim_cliente[pais_nombre]), "#,##0") & " países"
+
 	partition factura = m
 		mode: import
 		source =

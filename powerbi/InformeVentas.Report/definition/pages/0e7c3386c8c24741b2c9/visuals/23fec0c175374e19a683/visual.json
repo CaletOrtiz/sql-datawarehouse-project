@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "23fec0c175374e19a683",
+  "position": {
+    "x": 368,
+    "y": 110,
+    "z": 1007,
+    "height": 80,
+    "width": 176,
+    "tabOrder": 1007
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Facturas"
+                }
+              },
+              "queryRef": "factura.Facturas",
+              "nativeQueryRef": "Facturas"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

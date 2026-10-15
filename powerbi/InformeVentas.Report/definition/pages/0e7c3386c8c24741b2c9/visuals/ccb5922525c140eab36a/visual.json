@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "ccb5922525c140eab36a",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 1000,
+    "height": 48,
+    "width": 900,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Título Historia"
+                }
+              },
+              "queryRef": "factura.Título Historia",
+              "nativeQueryRef": "Título Historia"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

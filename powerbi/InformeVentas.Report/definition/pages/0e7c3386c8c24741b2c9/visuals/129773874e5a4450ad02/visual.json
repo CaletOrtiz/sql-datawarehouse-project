@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "129773874e5a4450ad02",
+  "position": {
+    "x": 552,
+    "y": 110,
+    "z": 1008,
+    "height": 80,
+    "width": 176,
+    "tabOrder": 1008
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "drillFilterOtherVisuals": true,
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "factura"
+                    }
+                  },
+                  "Property": "Ticket Medio"
+                }
+              },
+              "queryRef": "factura.Ticket Medio",
+              "nativeQueryRef": "Ticket Medio"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "6a9c864ac0fc498fb1da",
+  "displayName": "Menú",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280
+}
